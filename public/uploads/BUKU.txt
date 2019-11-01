@@ -1,0 +1,5 @@
+1. Sukirno, S. (2013). Makro Ekonomi Teori Pengantar. In S. Sukirno. Depok: PT RajaGrafindo Persada.
+2. Rehman, M. K. (2014). Foreign Currency Exchange Rates Prediction Using CGP and Recurrent Neural Network. IERI Procedia, 239 - 244.
+3. Budiharto, Widodo, Machine Learning & Computational Intelligence. Yogyakarta: C.V. Andi Offset
+4. Paul R. Krugman & Maurice Obstfeld -  The great unraveling: losing our in the new c
+5. Putra(2017) - Computer Vision & Aplikasinya Menggunakan C# & EmguC
