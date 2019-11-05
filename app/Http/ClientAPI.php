@@ -50,7 +50,7 @@ class ClientAPI
         if(empty($start)) $start = date('Ymd', strtotime(Carbon::now()));
         
         if(empty($end)) $end   = date('Ymd', strtotime(Carbon::now()));
-
+        
         $client = new Client();
         $url  = $this->apiClient['url'] . '/briva/report/';
         $url .= $this->apiClient['institution_code'] . '/' . $this->apiClient['briva_number'] . '/';

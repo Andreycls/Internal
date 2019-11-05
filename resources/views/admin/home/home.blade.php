@@ -97,8 +97,17 @@
 <div id="chart-div" ></div>
 @donutchart('kota', 'chart-div')
 
-Test cURL :
-{!!$profile['id']!!}
+
+Response After create VA :
+{{!!$responseCreateVA!!}}
+
+<br><br>
+Response Get Report :
+{{!!$getStatusVA!!}}
+<br><br>
+Response :
+{{!!$responseName!!}}
+
                 </div>
             </div>
         </div>
