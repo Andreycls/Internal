@@ -15,14 +15,14 @@ use Mailjet;
 use Mailjet\LaravelMailjet\MailjetServiceProvider;
 use \Mailjet\Resources;
 use Illuminate\Console\Command;
-class HourlyUpdate extends Command
+class DailyEvaluateData extends Command
 {
     /**
      * The name and signature of the console command.
      *
      * @var string
      */
-    protected $signature = 'clear:orders';
+    protected $signature = 'evaluate:unacceptable';
 
     /**
      * The console command description.

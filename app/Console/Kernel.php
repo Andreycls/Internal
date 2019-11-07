@@ -13,7 +13,7 @@ class Kernel extends ConsoleKernel
      * @var array
      */
     protected $commands = [
-        'App\Console\Commands\MinutelyCheckStatus',
+        'App\Console\Commands\HourlyCheckStatus',
     ];
 
     /**
@@ -24,7 +24,8 @@ class Kernel extends ConsoleKernel
      */
     protected function schedule(Schedule $schedule)
     {
-        $schedule->command('check:registration')->everyMinute();
+        $schedule->command('continue:registration')->everyMinute(); // Continue Registration
+        //$schedule->command('evaluate:unacceptable')->everyMinute(); // Evaluate data unpaid
     }
 
     /**

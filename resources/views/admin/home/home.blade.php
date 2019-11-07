@@ -103,13 +103,13 @@ Response After create VA :
 
 <br><br>
 Response Get Report :
-{{!!$getStatusVA!!}}
+{!!$getStatusVA!!}
 <br><br>
 Response :
 {!!$responseName!!}
 
 <br><br>
-EMAIL : {!!$email!!}
+EMAIL : 
 
                 </div>
             </div>

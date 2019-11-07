@@ -1,7 +1,7 @@
 @extends('layouts.app')
 
 @section('content')
-    <h3 class="page-title">@lang('quickadmin.users.title')</h3>
+    <h3 class="page-title">@lang('quickadmin.gedung.title')</h3>
     
     {!! Form::model($pengumuman, ['method' => 'PUT', 'route' => ['admin.pengumuman.update', $pengumuman->id]]) !!}
 
@@ -52,7 +52,7 @@ $(document).ready(function() {
         </div>
     </div>
 
-    {!! Form::submit(trans('quickadmin.qa_update'), ['class' => 'btn btn-danger']) !!}
+    {!! Form::submit(trans('quickadmin.qa_update'), ['class' => 'btn btn-info']) !!}
     {!! Form::close() !!}
 @stop
 

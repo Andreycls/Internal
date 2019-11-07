@@ -42,9 +42,7 @@
         @php
             $viewGedung = App\Http\Controllers\Admin\GenerateController::viewGedung($val->nama_kota);
         
-            $pendaftarRegional = App\Http\Controllers\Admin\GenerateController::getPendaftarRegional($val->nama_kota);
-            $namaPendaftarRegional=$pendaftarRegional->pluck('nama_lengkap')->shuffle()->all();
-            $nilai_baru=0;
+            
         @endphp
 
     
@@ -61,19 +59,7 @@
         @for($j=0; $j<=31;$j++)
         <p>___  {{$j+1}}.
         
-        @if($nilai_baru+$init+(($i+1)*$j)< count($namaPendaftarRegional))
-                {{$namaPendaftarRegional[$nilai_baru+$init+$j]}}
-                @php
-                $sekolah= App\Http\Controllers\Admin\GenerateController::getSekolah($namaPendaftarRegional[$nilai_baru+$init+($j)]);
-                echo " --- ".$sekolah[0]->smp;
-                @endphp
-        @else
-        @php
         
-        $xy=$nilai_baru+$init+$j+1;
-        @endphp 
-            {{$xy}}
-        @endif
          </p>
         @endfor
         @php
@@ -83,11 +69,7 @@
         @endphp
 
     @endfor
-   @php
-
-    $nilai_baru = $xy;
-    
-   @endphp
+   
     @endforeach
     
         <hr>

@@ -298,7 +298,7 @@ else
     <th style="width:5%"></th>
     <th align="left" ><input type="file" name="file" id="file" required><input type="hidden" value="{{ csrf_token() }}" name="_token"></th> 
     <script > 
-    </fieldset>
+    
 function upperMe() { 
     document.getElementById("nama_lengkap").value = document.getElementById("nama_lengkap").value.toUpperCase(); 
     document.getElementById("email").value = document.getElementById("email").value.toUpperCase(); 
@@ -308,6 +308,7 @@ function upperMe() {
     document.getElementById("nama_ibu").value = document.getElementById("nama_ibu").value.toUpperCase(); 
     document.getElementById("pekerjaan_ayah").value = document.getElementById("pekerjaan_ayah").value.toUpperCase(); 
     document.getElementById("pekerjaan_ibu").value = document.getElementById("pekerjaan_ibu").value.toUpperCase(); 
+    document.getElementById("alamat_orangtua").value = document.getElementById("alamat_orangtua").value.toUpperCase(); 
 } 
 </script>
     <!-- <input type="text" name="pekerjaan_ibu" id="pekerjaan_ibu" class= 'foo' onchange="upperMe()" /> -->

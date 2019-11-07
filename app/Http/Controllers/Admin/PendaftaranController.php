@@ -113,6 +113,7 @@ class PendaftaranController extends Controller
     public function store(StorePendaftaranRequestOffline $request)
     {
         // 
+        DB::beginTransaction();
         $user = Pendaftaran::where('email',$request->input('email'))->first();
         $email = $request->input('email');
         $name = $request->input('nama_lengkap');
@@ -130,21 +131,28 @@ class PendaftaranController extends Controller
       }
         $requestData = $request->all();
         $pendaftaranCon = new PendaftaranController();
-        //$requestData['provinsi'] = "asas";
         $request->merge(['provinsi' => $pendaftaranCon->getProvName($provId)]);
         $request->merge(['nomor_pendaftaran' =>$pendaftaranCon->generateNomorPendaftaran($lokasi,$provId,$namaKabKota,$namaSekolah)]);
         
         try {
         $pendaftaran = Pendaftaran::create($request->all());
+        $this->createEndpoint($nisn,$name);
+        $this->pushNotificationEmail($email,$name,$nisn,$lokasi);
     }
         catch( \Illuminate\Database\QueryException $e){
             return back()->withErrors(['NISN ini ('.$request->input('NISN').') sudah terdaftar']);
+        }catch(Exception $e)
+        {
+          DB::rollback();
+          return back()->withErrors(['Koneksi lambat. Mohon ulangi kembali pendaftaran']);
         }
-        $this->createEndpoint($nisn,$name);
-        $this->pushNotificationEmail($email,$name,$nisn,$lokasi);
+        
         return back()->with('success','Selamat, anda telah melakukan registrasi. Selanjutnya silahkan cek email');
 
     }
+    // public function rollback($nisn){
+
+    // }
 
     public function generateSignature($path,$verb,$token,$timestamp,$body,$secret){
       $payload = "path=$path&verb=$verb&token=Bearer $token&timestamp=$timestamp&body=$body";
@@ -173,7 +181,7 @@ class PendaftaranController extends Controller
     public function createEndpoint($custCode,$nama){
       $institutionCode = "J104408";
       $brivaNo = "77777";
-      $amount="1000000";
+      $amount="200000";
       $keterangan="Biaya Pendaftaran";
       $expiredDate="2017-09-10 09:57:26";
       $token = $this->getToken()["access_token"];

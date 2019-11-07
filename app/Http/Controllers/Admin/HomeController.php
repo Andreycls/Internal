@@ -395,18 +395,19 @@ class HomeController extends Controller
             'height'=>500,
             'title' => 'Pesebaran asal peserta  (Total : '.Pendaftaran::count().')'
             ]);         
-                        
+            error_log('have been hit :)');
+
             $response=$this->parseResponseToArray(); //Array
             $responseName = $response[0]["custCode"];
-            $email = Pendaftaran::select('email')->where('NISN', $responseName)->get()[0]["email"];
-            $this->notifyByEmail($responseName);
-            for ($index = 0; $index < count($response); $index++) {
-               $nisn = $response[$index]["custCode"];
-               DB::table('pendaftar')
-                    ->where('NISN', $nisn)
-                    ->update(['status_pembayaran' => "LUNAS"]);
+            //$email = Pendaftaran::select('email')->where('NISN', $responseName)->get()[0]["email"];
+            //$this->notifyByEmail($responseName);
+            // for ($index = 0; $index < count($response); $index++) {
+            //    $nisn = $response[$index]["custCode"];
+            //    DB::table('pendaftar')
+            //         ->where('NISN', $nisn)
+            //         ->update(['status_pembayaran' => "LUNAS"]);
                 
-            } 
+            // } 
                         $responseCreateVA = json_encode($this->createVA());
                         $currentToken = $this->getToken();
                         $getStatusVA = json_encode($this->getReportVA());

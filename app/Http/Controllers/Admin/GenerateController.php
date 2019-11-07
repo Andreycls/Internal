@@ -42,7 +42,7 @@ class GenerateController extends Controller
             $results = DB::select('select * from pendaftar where status_pembayaran = :id and lokasi = :kota', ['id' => "lunas",'kota'=>$this->getLokasiByEmail($email)]);
             $result_count=count($results);
             
-            $affected = DB::update('update pendaftar set index_pendaftar = ? where email = ?',[$result_count,$email]);
+            //$affected = DB::update('update pendaftar set index_pendaftar = ? where email = ?',[$result_count,$email]);
             $results=0;
        
             
@@ -64,8 +64,8 @@ class GenerateController extends Controller
     }
 
     public static function getPendaftarRegional($kota){
-        $pendaftar_ = Pendaftaran::where('lokasi','=',$kota)->where('status_pembayaran','=',"lunas")->orderBy('index_pendaftar', 'asc')->get();
-        return $pendaftar_;
+        // $pendaftar_ = Pendaftaran::where('lokasi','=',$kota)->where('status_pembayaran','=',"lunas")->orderBy('index_pendaftar', 'asc')->get();
+        // return $pendaftar_;
     }
     public static function getSekolah($nama_){
         $pendaftar_= Pendaftaran::where('nama_lengkap','=',$nama_)->get();
@@ -88,7 +88,7 @@ class GenerateController extends Controller
      }
      public static function updateIndex($id,$email) {
          
-        DB::update('update pendaftar set index_pendaftar = ? where email = ?',[$id,$email]);
+        //DB::update('update pendaftar set index_pendaftar = ? where email = ?',[$id,$email]);
        
      }
 

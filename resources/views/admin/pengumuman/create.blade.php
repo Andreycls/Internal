@@ -89,7 +89,7 @@
         </div>
     </div>
 
-    {!! Form::submit(trans('quickadmin.qa_save'), ['class' => 'btn btn-danger']) !!}
+    {!! Form::submit(trans('quickadmin.qa_save'), ['class' => 'btn btn-info']) !!}
     {!! Form::close() !!}
     <form method="post" action="{{url('image/upload/store')}}" enctype="multipart/form-data" 
                   class="dropzone" id="dropzone">

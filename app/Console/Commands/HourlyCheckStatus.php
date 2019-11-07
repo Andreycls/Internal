@@ -4,14 +4,14 @@ namespace App\Console\Commands;
 
 use Illuminate\Console\Command;
 use App\Pendaftaran;
-class MinutelyCheckStatus extends Command
+class HourlyCheckStatus extends Command
 {
     /**
      * The name and signature of the console command.
      *
      * @var string
      */
-    protected $signature = 'clear:registration';
+    protected $signature = 'continue:registration';
 
     /**
      * The console command description.
@@ -284,13 +284,15 @@ class MinutelyCheckStatus extends Command
     
     public function handle()
     {
-        error_log('message here.');
+        error_log('have been hit :)');
         $currentDate = date("Ymd");
         $currentTime = date("h:i:sa");
         $startTime = date('H:i',strtotime('-1 hour ',strtotime($currentTime)));
         $endTime = date('H:i',strtotime('+0 hour ',strtotime($currentTime)));
         $response=$this->getReportVA($currentDate,$startTime,$endTime); //Array scheduler
-
+        DB::table('pendaftar')
+                ->where('NISN', "9876545678")
+                    ->update(['status_pembayaran' => "LUNAS"]);
         for ($index = 0; $index < count($response); $index++) {
            $nisn = $response[$index]["custCode"];
            DB::table('pendaftar')
