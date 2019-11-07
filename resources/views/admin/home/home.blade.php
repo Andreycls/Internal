@@ -106,7 +106,10 @@ Response Get Report :
 {{!!$getStatusVA!!}}
 <br><br>
 Response :
-{{!!$responseName!!}}
+{!!$responseName!!}
+
+<br><br>
+EMAIL : {!!$email!!}
 
                 </div>
             </div>

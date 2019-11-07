@@ -26,8 +26,8 @@ class PendaftaranController extends Controller
     public function index()
     {
         $pendaftar = Pendaftaran::where('foto', '!=', 'offline')->paginate(1);;
-        $pendaftarOnline = Pendaftaran::where('foto', '!=', 'offline')->paginate(1);
-        $pendaftarOffline = Pendaftaran::where('foto', '=', 'offline')->paginate(3);
+        $pendaftarOnline = Pendaftaran::where('foto', '!=', 'offline')->paginate(10);
+        $pendaftarOffline = Pendaftaran::where('foto', '=', 'offline')->paginate(10);
         
 
         return view('admin.pendaftaran.index', compact('pendaftar','pendaftarOnline','pendaftarOffline'));
@@ -87,7 +87,6 @@ class PendaftaranController extends Controller
       return $idKabKota;
     }
     public function getKodeSekolah($namaSekolah){
-      //$kodeSekolah= 
       return "00";
     }
     
@@ -144,6 +143,7 @@ class PendaftaranController extends Controller
         $this->createEndpoint($nisn,$name);
         $this->pushNotificationEmail($email,$name,$nisn,$lokasi);
         return back()->with('success','Selamat, anda telah melakukan registrasi. Selanjutnya silahkan cek email');
+
     }
 
     public function generateSignature($path,$verb,$token,$timestamp,$body,$secret){
@@ -176,8 +176,9 @@ class PendaftaranController extends Controller
       $amount="1000000";
       $keterangan="Biaya Pendaftaran";
       $expiredDate="2017-09-10 09:57:26";
-      $token = $this->getToken();
-      
+      $token = $this->getToken()["access_token"];
+      $timestamp = gmdate("Y-m-d\TH:i:s.000\Z");
+      $secret = "O0KvtNbiAjdaO59Z";
       $datas = array('institutionCode' => $institutionCode ,
        'brivaNo' => $brivaNo,
        'custCode' => $custCode,
@@ -214,6 +215,7 @@ class PendaftaranController extends Controller
     }
 
     public function pushNotificationEmail($email,$name,$nisn,$lokasi){
+      $brivaNo = "77777";
 
       $mj = new \Mailjet\Client(getenv('MAILJET_APIKEY'), getenv('MAILJET_APISECRET'),true,['version' => 'v3.1']);
       $body = [
@@ -349,7 +351,7 @@ class PendaftaranController extends Controller
                                         <br><br>
                                         <h2> Metode Pembayaran </h2><br>
                                         <p style='font-family: sans-serif; font-size: 14px; font-weight: normal; margin: 0; Margin-bottom: 15px;'>Silahkan melakukan pembayaran melalui BRI Virtual Account :</p>
-                                        <p style='font-family: sans-serif; font-size: 14px; font-weight: normal; margin: 0; Margin-bottom: 15px;'>BRI Virtual Account : 00000".$nisn."000 a.n Yayasan Soposurung</p>
+                                        <p style='font-family: sans-serif; font-size: 14px; font-weight: normal; margin: 0; Margin-bottom: 15px;'>BRI Virtual Account : ".$brivaNo.$nisn." a.n Yayasan Soposurung</p>
                                         <p style='font-family: sans-serif; font-size: 14px; font-weight: normal; margin: 0; Margin-bottom: 15px;'>Biaya administrasi  : Rp. 200.000 </p>
                                         <br>
                                         <p style='font-family: sans-serif; font-size: 14px; font-weight: normal; margin: 0; Margin-bottom: 15px;'>Catatan :</p>
@@ -398,7 +400,6 @@ class PendaftaranController extends Controller
                     </table>
                   </body>
                 </html>
-  
                   "
               ]
           ]
@@ -436,9 +437,6 @@ class PendaftaranController extends Controller
         
         $panduan = Panduan::findOrFail($id);
         $panduan->update($request->all());
-
-
-
         return redirect()->route('admin.panduan.index');
     }
 
