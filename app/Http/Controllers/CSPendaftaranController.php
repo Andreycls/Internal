@@ -52,11 +52,13 @@ class CSPendaftaranController extends Controller
 
     public function store(StorePendaftaranRequest $request)
     {
+        $timestamp = gmdate("Y-m-d\TH:i:s.000\Z");
         if(Input::hasFile('file')){
 			$file = Input::file('file');
-			$file->move('uploads', $file->getClientOriginalName());
+            $file->move('uploads', $timestamp.$file->getClientOriginalName());
+            $request->merge(['foto' =>  $timestamp.$file->getClientOriginalName()]);
         }
-        DB::beginTransaction();
+        //DB::beginTransaction();
         $user = Pendaftaran::where('email',$request->input('email'))->first();
         $email = $request->input('email');
         $name = $request->input('nama_lengkap');
@@ -75,6 +77,8 @@ class CSPendaftaranController extends Controller
         $requestData = $request->all();
         $pendaftaranCon = new PendaftaranController();
         $request->merge(['provinsi' => $pendaftaranCon->getProvName($provId)]);
+        $request->merge(['foto' =>  $timestamp.$file->getClientOriginalName()]);
+        
         $request->merge(['nomor_pendaftaran' =>$pendaftaranCon->generateNomorPendaftaran($lokasi,$provId,$namaKabKota,$namaSekolah)]);
         
         try 

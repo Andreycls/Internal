@@ -121,7 +121,7 @@ class HomeController extends Controller
             $institutionCode = "J104408";
             $brivaNo = "77777";
             $custCode = "002876257";
-            $path = "/sandbox/v1/briva/report/j104408/77777/20191107/20191107";
+            $path = "/sandbox/v1/briva/report/j104408/77777/2019-11-07/10:30/2019-11-07/15:30";
             $verb = "GET";
             $secret = 'O0KvtNbiAjdaO59Z';
             $token = $this->getToken()["access_token"];
@@ -134,6 +134,7 @@ class HomeController extends Controller
             $base64sign = $this->generateSignature($path, $verb, $token, $timestamp, $body = '', $secret);
     
             $request_headers = array(
+                "Content-Type: application/x-www-form-urlencoded",
                 "Authorization:Bearer " . $token,
                 "BRI-Timestamp:" . $timestamp,
                 "BRI-Signature:" . $base64sign,
@@ -157,12 +158,13 @@ class HomeController extends Controller
     
         
     
-
+        // Lama kali org BRI nya anjay
     public function parseResponseToArray(){
         $response = $this->getReportVA();
         //$response=json_decode($response,true);
-        $data = $response['Data'];
-        return $data;
+        //$data = $response['data'];
+        //return $response;
+        //echo json_encode($response);
         
     }
     public function notifyByEmail($nisn){

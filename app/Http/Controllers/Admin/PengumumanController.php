@@ -55,19 +55,17 @@ class PengumumanController extends Controller
      */
     public function store(StorePengumumanRequest $request_)
     {
-        if (! Gate::allows('pengumuman_create')) {
-            return abort(401);
-        }
+    
         $pengumuman = Pengumuman::create($request_->all());
-        // $image = $request_->file('file');
-        // $imageName = $image->getClientOriginalName();
-        // $image->move(public_path('images'),$imageName);
+         $image = $request_->file('file');
+         //$imageName = $image->getClientOriginalName();
+         //$image->move(public_path('images'),$imageName);
         
-        // $imageUpload = new ImageUpload();
-        // $imageUpload->filename = $imageName;
-        // $imageUpload->save();
+         //$imageUpload = new ImageUpload();
+        //  $imageUpload->filename = $imageName;
+        //  $imageUpload->save();
 
-        //var_dump($request_->file('file'));
+        var_dump($request_->file('file'));
         return redirect()->route('admin.pengumuman.index');
     }
 
@@ -103,9 +101,6 @@ class PengumumanController extends Controller
         }
         $pengumuman = Pengumuman::findOrFail($id);
         $pengumuman->update($request->all());
-
-
-
         return redirect()->route('admin.pengumuman.index');
     }
 
