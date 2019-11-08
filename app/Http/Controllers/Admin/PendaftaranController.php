@@ -162,6 +162,7 @@ class PendaftaranController extends Controller
   }
 
   public function getToken(){
+
     $url ="https://sandbox.partner.api.bri.co.id/oauth/client_credential/accesstoken?grant_type=client_credentials";
     $data = "client_id=AeA1hnXOkF4rC7y5CCDEzschHxIuONHp&client_secret=O0KvtNbiAjdaO59Z";
     $ch = curl_init();
@@ -177,6 +178,7 @@ class PendaftaranController extends Controller
     $json = json_decode($result, true);
     $accesstoken = $json['access_token'];
     return $json;
+    
 }
     public function createEndpoint($custCode,$nama){
       $institutionCode = "J104408";

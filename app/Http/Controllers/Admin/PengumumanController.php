@@ -57,7 +57,7 @@ class PengumumanController extends Controller
     {
     
         $pengumuman = Pengumuman::create($request_->all());
-         $image = $request_->file('file');
+        $image = $request_->file('file');
          //$imageName = $image->getClientOriginalName();
          //$image->move(public_path('images'),$imageName);
         
@@ -65,7 +65,7 @@ class PengumumanController extends Controller
         //  $imageUpload->filename = $imageName;
         //  $imageUpload->save();
 
-        var_dump($request_->file('file'));
+        //var_dump($request_->file('file'));
         return redirect()->route('admin.pengumuman.index');
     }
 

@@ -126,10 +126,7 @@ class HomeController extends Controller
             $secret = 'O0KvtNbiAjdaO59Z';
             $token = $this->getToken()["access_token"];
             $timestamp = gmdate("Y-m-d\TH:i:s.000\Z");
-            $startDate = "20190510";
-            $endDate = "20190510";
-            $startTime = "10:30";
-            $endTime = "10:30";
+            
     
             $base64sign = $this->generateSignature($path, $verb, $token, $timestamp, $body = '', $secret);
     
@@ -150,7 +147,6 @@ class HomeController extends Controller
             $resultPost = curl_exec($chPost);
             $httpCodePost = curl_getinfo($chPost, CURLINFO_HTTP_CODE);
             curl_close($chPost);
-    
             $jsonPost = json_decode($resultPost, true);
             
             return $jsonPost;

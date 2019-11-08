@@ -141,10 +141,10 @@
                            
                            
                                 </div>
-                                
+                                    
                                 <div class="mask" style="color:#002640"><h2><br><br><br><strong>Baca Selengkapnya </strong></h2></div>
-                                <h4 style="margin-left:15px;color:white;text-align:left;text-transform:uppercase">{{ $pengumuman->title }} </h4>
-                               
+                                <h4 style="margin-left:15px;color:white;text-align:left;text-transform:uppercase">{{ str_limit($pengumuman->title, $limit = 30, $end = '...')  }} </h4>
+                                
                             <p style="color: #74A8E3  ;text-align:left"><i class="far fa-calendar-alt" style="color:#74A8E3"></i> &nbsp; {{date(' d F Y H:i', strtotime($pengumuman->updated_at))}}</p>
                             </div>
                             
