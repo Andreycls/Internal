@@ -138,10 +138,10 @@
                            
                             
                                 <div class="thumbnail-img" >
-                           
+                            
                            
                                 </div>
-                                    
+
                                 <div class="mask" style="color:#002640"><h2><br><br><br><strong>Baca Selengkapnya </strong></h2></div>
                                 <h4 style="margin-left:15px;color:white;text-align:left;text-transform:uppercase">{{ str_limit($pengumuman->title, $limit = 30, $end = '...')  }} </h4>
                                 
