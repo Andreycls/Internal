@@ -40,6 +40,9 @@ class DailyEvaluateData extends Command
     {
         parent::__construct();
     }
+    public function deleteEndpoint(){
+      
+    }
 
     /**
      * Execute the console command.
@@ -240,11 +243,6 @@ $body = [
     </table>
   </body>
 </html>
-
-
-            
-            
-            
             "
         ]
     ]
