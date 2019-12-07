@@ -115,7 +115,12 @@ class UsersController extends Controller
             return abort(401);
         }
         
-        $roles = \App\Role::get()->pluck('title', 'id')->prepend(trans('quickadmin.qa_please_select'), '');$expense_categories = \App\ExpenseCategory::where('created_by_id', $id)->get();$income_categories = \App\IncomeCategory::where('created_by_id', $id)->get();$currencies = \App\Currency::where('created_by_id', $id)->get();$incomes = \App\Income::where('created_by_id', $id)->get();$expenses = \App\Expense::where('created_by_id', $id)->get();
+        $roles = \App\Role::get()->pluck('title', 'id')->prepend(trans('quickadmin.qa_please_select'), '');
+        // $expense_categories = \App\ExpenseCategory::where('created_by_id', $id)->get();
+        // $income_categories = \App\IncomeCategory::where('created_by_id', $id)->get();
+        // $currencies = \App\Currency::where('created_by_id', $id)->get();
+        // $incomes = \App\Income::where('created_by_id', $id)->get();
+        // $expenses = \App\Expense::where('created_by_id', $id)->get();
 
         $user = User::findOrFail($id);
 

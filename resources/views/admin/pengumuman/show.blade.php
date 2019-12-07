@@ -33,6 +33,16 @@
                             <th>@lang('quickadmin.pengumuman.fields.content')</th>
                             <td field-key='content'>{!! $pengumuman->content!!}</td>
                         </tr>
+                        <tr>
+                            <th>@lang('quickadmin.pengumuman.fields.file')</th>
+                            <td field-key='content'><a href="{{URL::to('/')}}/uploads/{!! $pengumuman->file!!}" target="_blank">
+                            <button class="btn"><i class="fa fa-download"></i> {!! $pengumuman->file!!}</button>
+                        </a></td>
+                        </tr>
+
+                        
+
+
                     </table>
                 </div>
             </div><!-- Nav tabs -->

@@ -9,30 +9,8 @@
 </head>
 <h3 class="page-title">@lang('quickadmin.pengumuman.title')</h3>
     
-{!! Form::open(['method' => 'POST', 'route' => ['admin.pengumuman.store']]) !!}
+{!! Form::open(['method' => 'POST','files' =>true,'enctype'=>'multipart/form-data', 'route' => ['admin.pengumuman.store']]) !!}
     
-<script type="text/javascript">
-        Dropzone.options.dropzone =
-         {
-            maxFilesize: 12,
-            renameFile: function(file) {
-                var dt = new Date();
-                var time = dt.getTime();
-               return time+file.name;
-            },
-            acceptedFiles: ".jpeg,.jpg,.png,.gif",
-            addRemoveLinks: true,
-            timeout: 5000,
-            success: function(file, response) 
-            {
-                console.log(response);
-            },
-            error: function(file, response)
-            {
-               return false;
-            }
-};
-</script>
     <div class="panel panel-default">
         <div class="panel-heading">
             @lang('quickadmin.qa_create')
@@ -51,7 +29,10 @@
                     @endif
                 </div>
             </div>
-            <input type = "hidden" name = "author" value = "{{Auth::user()->name}}">        
+
+           
+            <input type = "hidden" name = "author" value = "{{Auth::user()->name}}">
+                  
             <div class="row">
                 <div class="col-xs-12 form-group">
                     {!! Form::label('content', trans('quickadmin.pengumuman.fields.content'), ['class' => 'control-label']) !!}
@@ -64,6 +45,24 @@
                     @endif
                 </div>
             </div>
+
+            <div class="row">
+                <div class="col-xs-12 form-group">
+                    {!! Form::label('content', trans('quickadmin.pengumuman.fields.file'), ['class' => 'control-label']) !!}
+                    <input type="file" name="file" id="file">
+                    <input type="hidden" value="{{ csrf_token() }}" name="_token">  
+                    <p class="help-block"></p>
+                    @if($errors->has('content'))
+                        <p class="help-block">
+                            {{ $errors->first('content') }}
+                        </p>
+                    @endif
+                </div>
+            </div>
+
+            
+
+            
             <script src="//cdn.ckeditor.com/4.11.3/full/ckeditor.js"></script>
             
         <script>
@@ -91,8 +90,8 @@
 
     {!! Form::submit(trans('quickadmin.qa_save'), ['class' => 'btn btn-info']) !!}
     {!! Form::close() !!}
-    <form method="post" action="{{url('image/upload/store')}}" enctype="multipart/form-data" 
-                  class="dropzone" id="dropzone">
+    <!-- <form method="post" action="{{url('image/upload/store')}}" enctype="multipart/form-data" 
+                  class="dropzone" id="dropzone"> -->
     <!-- @csrf -->
 </form>   
 @stop

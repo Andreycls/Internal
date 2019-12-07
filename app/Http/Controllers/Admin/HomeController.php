@@ -393,7 +393,7 @@ class HomeController extends Controller
             'height'=>500,
             'title' => 'Pesebaran asal peserta  (Total : '.Pendaftaran::count().')'
             ]);         
-            error_log('have been hit :)');
+            //error_log('have been hit :)');
 
             $response=$this->parseResponseToArray(); //Array
             $responseName = $response[0]["custCode"];

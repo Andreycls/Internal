@@ -15,9 +15,12 @@ use Mailjet;
 use Mailjet\LaravelMailjet\MailjetServiceProvider;
 use \Mailjet\Resources;
 use App\Http\Controllers\Admin\PendaftaranController;
+use DateTime;
 
 class CSPendaftaranController extends Controller
 {
+    var $acces_token = "";
+    static $gmt_token;
     /**
      * Create a new controller instance.
      *
@@ -25,6 +28,9 @@ class CSPendaftaranController extends Controller
      */
     public function __construct()
     {
+      date_default_timezone_set('Asia/Jakarta');
+      
+      
         //$this->middleware('guest');
     }
 
@@ -34,7 +40,8 @@ class CSPendaftaranController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function index()
-    {
+    { 
+                $this->getToken();
                 $propinsi = DB::table('propinsi')->pluck('nama_propinsi','id');
                 $pengumuman = Pengumuman::all();
                 $kota = DB::table('kota')->pluck('nama_kota','id');
@@ -54,7 +61,7 @@ class CSPendaftaranController extends Controller
     {
         $timestamp = gmdate("Y-m-d\TH:i:s.000\Z");
         if(Input::hasFile('file')){
-			$file = Input::file('file');
+			      $file = Input::file('file');
             $file->move('uploads', $timestamp.$file->getClientOriginalName());
             $request->merge(['foto' =>  $timestamp.$file->getClientOriginalName()]);
         }
@@ -100,6 +107,23 @@ class CSPendaftaranController extends Controller
 
     }
 
+    public function getToken(){
+      $jsonString = file_get_contents(__DIR__ . '/token.json');
+      $data = json_decode($jsonString, true);
+      $currentDateTime = new \DateTime(date('Y-m-d H:i:s'));
+      $savedDateTime = new DateTime($data['gmtToken']);
+      $diff = $currentDateTime->diff($savedDateTime);
+      $hours = $diff->h + ($diff->days*24);
+      
+      if($hours>=1){
+        $data['gmtToken'] = $currentDateTime->format('Y-m-d H:i:s');
+        $data['accessToken']= $this->getToken()["access_token"];
+        $newJsonString = json_encode($data, JSON_PRETTY_PRINT);
+        file_put_contents(__DIR__ . '/token.json', stripslashes($newJsonString));
+      }
+      return $data['accessToken'];
+    }
+
 
 
     public function generateSignature($path,$verb,$token,$timestamp,$body,$secret){
@@ -109,7 +133,8 @@ class CSPendaftaranController extends Controller
         return $base64sign;
     }
   
-    public function getToken(){
+    public function generateToken(){
+      
       $url ="https://sandbox.partner.api.bri.co.id/oauth/client_credential/accesstoken?grant_type=client_credentials";
       $data = "client_id=AeA1hnXOkF4rC7y5CCDEzschHxIuONHp&client_secret=O0KvtNbiAjdaO59Z";
       $ch = curl_init();
@@ -126,13 +151,15 @@ class CSPendaftaranController extends Controller
       $accesstoken = $json['access_token'];
       return $json;
   }
+
+  
       public function createEndpoint($custCode,$nama){
         $institutionCode = "J104408";
         $brivaNo = "77777";
         $amount="200000";
         $keterangan="Biaya Pendaftaran";
         $expiredDate="2017-09-10 09:57:26";
-        $token = $this->getToken()["access_token"];
+        $token = $this->getToken();
         $timestamp = gmdate("Y-m-d\TH:i:s.000\Z");
         $secret = "O0KvtNbiAjdaO59Z";
         $datas = array('institutionCode' => $institutionCode ,

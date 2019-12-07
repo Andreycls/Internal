@@ -7,7 +7,7 @@ use Illuminate\Support\Facades\Gate;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Admin\StorePengumumanRequest;
 use App\Http\Requests\Admin\UpdatePengumumanRequest;
-
+use Illuminate\Support\Facades\Input;
 class PengumumanController extends Controller
 {
     /**
@@ -53,20 +53,33 @@ class PengumumanController extends Controller
      * @param  \App\Http\Requests\StorePengumumanRequest  $request_
      * @return \Illuminate\Http\Response
      */
-    public function store(StorePengumumanRequest $request_)
+    public function store(StorePengumumanRequest $request)
     {
-    
-        $pengumuman = Pengumuman::create($request_->all());
-        $image = $request_->file('file');
-         //$imageName = $image->getClientOriginalName();
-         //$image->move(public_path('images'),$imageName);
-        
-         //$imageUpload = new ImageUpload();
-        //  $imageUpload->filename = $imageName;
-        //  $imageUpload->save();
+        $timestamp = gmdate("Ymd-TH:i:s.000-Z");
+        $file=$request->input('file');
+        $fileName = $timestamp.$file;
+        if(Input::hasFile('file')){
+			$file = Input::file('file');
+            $file->move('uploads', $timestamp.$file->getClientOriginalName());
+            
+            
+            //$data = array_merge(['file' => $timestamp.$file->getClientOriginalName()], $request->all());
 
-        //var_dump($request_->file('file'));
+            
+        }
+        try 
+        {
+            $request->merge(['file' => "memek"]);
+            $pengumuman = Pengumuman::create($request->all());
+            dd($request->all());
+        }
+        catch(Exception $e)
+        {
+          return back()->withErrors(['Koneksi lambat. Mohon ulangi kembali pendaftaran']);
+        }
         return redirect()->route('admin.pengumuman.index');
+
+
     }
 
 

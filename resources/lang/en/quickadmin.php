@@ -186,7 +186,8 @@ return [
 			'index'=>'#',
 			'creator'=>'Dibuat oleh',
 			'created_at'=>'Tanggal dibuat',
-			'updated_at'=>'Tanggal diperbarui'
+			'updated_at'=>'Tanggal diperbarui',
+			'file'=>'File'
 		],
 	],
 	'FAQ-management' => [
