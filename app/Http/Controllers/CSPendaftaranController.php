@@ -42,6 +42,14 @@ class CSPendaftaranController extends Controller
     public function index()
     {           
                 app('App\Http\Controllers\BrivaHelper')->getOrGenerateToken();
+                date_default_timezone_set('Asia/Jakarta');
+        // error_log('have been hit :)');
+        // $currentDate = date("Y-m-d");
+        // $currentTime = date("h:i:sa");
+        // $startTime = date('H:m',strtotime('-1 hour ',strtotime($currentTime)));
+        // $endTime = date('H:m',strtotime('+0 hour ',strtotime($currentTime)));
+        // $response = app('App\Http\Controllers\BrivaHelper')->getReportVaByHour($currentDate,$startTime,$endTime);
+        // var_dump( $response);
                 $startDate = "2019-11-06";
                 $endDate = "2019-11-06";
                 $startTime = "06:30";

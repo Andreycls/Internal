@@ -14,6 +14,7 @@ use Illuminate\Support\Facades\Gate;
 use DB;
 use DateTime;
 use \Mailjet\Resources;
+use App\Pendaftaran;
 
 class MailingHelper
 {

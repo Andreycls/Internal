@@ -135,11 +135,12 @@ class BrivaHelper
             curl_setopt($chPost, CURLOPT_HTTPHEADER, $request_headers);
             curl_setopt($chPost, CURLINFO_HEADER_OUT, true);
             curl_setopt($chPost, CURLOPT_RETURNTRANSFER, true);
+            curl_setopt($chPost, CURLOPT_TIMEOUT_MS, 400);
             $resultPost = curl_exec($chPost);
             $httpCodePost = curl_getinfo($chPost, CURLINFO_HTTP_CODE);
             curl_close($chPost);
             $response = json_decode($resultPost, true);
-            return $response['data'] ;
+            return $response["data"] ;
         }
 
 

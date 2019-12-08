@@ -4,6 +4,7 @@ namespace App\Console\Commands;
 
 use Illuminate\Console\Command;
 use App\Pendaftaran;
+use DB;
 class HourlyCheckStatus extends Command
 {
     /**
@@ -43,25 +44,26 @@ class HourlyCheckStatus extends Command
 
     
     public function handle(){
-      
+        date_default_timezone_set('Asia/Jakarta');
         error_log('have been hit :)');
-        $currentDate = date("Ymd");
+        $currentDate = date("Y-m-d");
         $currentTime = date("h:i:sa");
-        $startTime = date('H:i',strtotime('-1 hour ',strtotime($currentTime)));
-        $endTime = date('H:i',strtotime('+0 hour ',strtotime($currentTime)));
+        $startTime = date('H:m',strtotime('-1 hour ',strtotime($currentTime)));
+        $endTime = date('H:m',strtotime('+0 hour ',strtotime($currentTime)));
         $response = app('App\Http\Controllers\BrivaHelper')->getReportVaByHour($currentDate,$startTime,$endTime); //Array scheduler
-        DB::table('pendaftar')
-                ->where('NISN', "9876545678")
-                    ->update(['status_pembayaran' => "LUNAS"]);
-        for ($index = 0; $index < count($response); $index++) {
-
-           $nisn = $response[$index]["custCode"];
-           DB::table('pendaftar')
-                ->where('NISN', $nisn)
-                    ->update(['status_pembayaran' => "LUNAS"]);
-           app('App\Http\Controllers\MailingHelper')->pushNotificationEmailAfterPay($nisn);
-           $this->setIndexLokasiPeserta($nisn);
-        } 
+        $this->info("Offset :".var_dump($response));
+        $this->info($currentDate." ".$startTime);
+        if($response!=null){
+           for ($index = 0; $index < count($response); $index++) {
+                $nisn = $response[$index]["custCode"];
+                DB::table('pendaftar')
+                 ->where('NISN', $nisn)
+                        ->update(['status_pembayaran' => "LUNAS"]);
+                app('App\Http\Controllers\MailingHelper')->pushNotificationEmailAfterPay($nisn);
+                $this->setIndexLokasiPeserta($nisn);
+                } 
+        }
+        $this->info('Hourly checking...');
         
     }
 }
