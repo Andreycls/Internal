@@ -34,9 +34,8 @@
                             <td field-key='content'>{!! $pengumuman->content!!}</td>
                         </tr>
                         <tr>
-                            <th>@lang('quickadmin.pengumuman.fields.file')</th>
-                            <td field-key='content'><a href="{{URL::to('/')}}/uploads/{!! $pengumuman->file!!}" target="_blank">
-                            <button class="btn"><i class="fa fa-download"></i> {!! $pengumuman->file!!}</button>
+                        <th><p>@lang('quickadmin.pengumuman.fields.file')</p></th>
+                            <td field-key='content'><a href="{{asset('uploads/pengumuman/'.$pengumuman->nama_file.'') }}" download="{{ asset('uploads/pengumuman/About.png') }}"> Unduh file</a></td>
                         </a></td>
                         </tr>
 

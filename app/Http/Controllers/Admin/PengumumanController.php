@@ -8,6 +8,8 @@ use App\Http\Controllers\Controller;
 use App\Http\Requests\Admin\StorePengumumanRequest;
 use App\Http\Requests\Admin\UpdatePengumumanRequest;
 use Illuminate\Support\Facades\Input;
+
+use Mpdf\Mpdf;
 class PengumumanController extends Controller
 {
     /**
@@ -56,27 +58,19 @@ class PengumumanController extends Controller
     public function store(StorePengumumanRequest $request)
     {
         $timestamp = gmdate("Ymd-TH:i:s.000-Z");
-        $file=$request->input('file');
-        $fileName = $timestamp.$file;
         if(Input::hasFile('file')){
-			$file = Input::file('file');
-            $file->move('uploads', $timestamp.$file->getClientOriginalName());
-            
-            
-            //$data = array_merge(['file' => $timestamp.$file->getClientOriginalName()], $request->all());
-
-            
+            $file = Input::file('file');
+            $file->move('uploads/pengumuman', $timestamp.$file->getClientOriginalName());
+            $request->merge(['nama_file' =>  $timestamp.$file->getClientOriginalName()]);
         }
-        try 
-        {
-            $request->merge(['file' => "memek"]);
+        
             $pengumuman = Pengumuman::create($request->all());
-            dd($request->all());
-        }
-        catch(Exception $e)
-        {
-          return back()->withErrors(['Koneksi lambat. Mohon ulangi kembali pendaftaran']);
-        }
+            $request->merge(['nama_file' =>  $timestamp.$file->getClientOriginalName()]);
+        // }
+        // catch(Exception $e)
+        // {
+        //   return back()->withErrors(['Koneksi lambat. Mohon ulangi kembali pendaftaran']);
+        // }
         return redirect()->route('admin.pengumuman.index');
 
 

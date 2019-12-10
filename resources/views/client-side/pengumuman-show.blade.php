@@ -134,22 +134,6 @@
             </div>
        
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
         @extends('layouts.pengumuman')
 
 @section('content')
@@ -169,6 +153,11 @@
                         <tr>
                             <th><p>@lang('quickadmin.pengumuman.fields.content')</p></th>
                             <td field-key='content'><p>{!! $pengumuman->content!!}</p></td>
+                        </tr>
+                        <tr>
+                            <th><p>@lang('quickadmin.pengumuman.fields.file')</p></th>
+                            <td field-key='content'><a href="{{asset('uploads/pengumuman/'.$pengumuman->nama_file.'') }}" download="{{ asset('uploads/pengumuman/About.png') }}"> Unduh file</a></td>
+                            
                         </tr>
                     </table>
                 </div>

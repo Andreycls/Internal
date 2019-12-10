@@ -72,8 +72,7 @@ class BrivaHelper
       return $json;
   }
 
-  public function createEndpoint($custCode,$nama){
-    
+  public function createEndpoint($custCode,$nama){ 
     $amount="200000";
     $keterangan="Biaya Pendaftaran";
     $expiredDate="2017-09-10 09:57:26";
@@ -126,7 +125,7 @@ class BrivaHelper
             $timestamp = gmdate("Y-m-d\TH:i:s.000\Z");
             $path = "/sandbox/v1/briva/report_time/".self::$brivaNo."/".self::$institutionCode."/".$currentDate."/".$startTime."/".$currentDate."/".$endTime;
             $base64sign = $this->generateSignature($path, $verb, $token, $timestamp, $body = '', $secret);
-    
+
             $request_headers = array(
                 "Authorization:Bearer " . $token,
                 "BRI-Timestamp:" . $timestamp,

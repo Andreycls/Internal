@@ -11,6 +11,6 @@ use Illuminate\Database\Eloquent\Model;
 class Pengumuman extends Model
 {
     //
-    protected $fillable = ['title','content','author','file'];
+    protected $fillable = ['title','content','author','nama_file'];
     protected $table = 'Pengumuman';
 }

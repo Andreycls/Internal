@@ -39,25 +39,19 @@ class CSPengumumanController extends Controller
     }
     public function showAll()
     {
-        // if (! Gate::allows('pengumuman_access')) {
-        //     return abort(401);
-        // }
-
-
-                $pengumuman = Pengumuman::all();
-               /// dd($pengumuman);
+        $pengumuman = Pengumuman::all();
         return view('client-side.pengumuman-all', compact('pengumuman'));
     }
     
     public function show($id)
     {
-        // if (! Gate::allows('pengumuman_view')) {
-        //     return abort(401);
-        // }
+    
         $pengumumans = \App\Pengumuman::where('id', $id)->get();
 
         $pengumuman = Pengumuman::findOrFail($id);
+        $pathToFile = "uploads/pengumuman";
+        $downloadPath = $pathToFile.$pengumuman->nama_file;
 
-        return view('client-side.pengumuman-show', compact('id', 'pengumuman','pengumumans'));
+        return view('client-side.pengumuman-show', compact('downloadPath','id', 'pengumuman','pengumumans'));
     }
 }

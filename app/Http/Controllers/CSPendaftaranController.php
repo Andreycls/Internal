@@ -29,8 +29,8 @@ class CSPendaftaranController extends Controller
     public function __construct()
     {
       $mpdf = new mPDF();
-      // $mpdf->WriteHTML('Hello World');
-      // $mpdf->Output();
+      $mpdf->WriteHTML('Hello World');
+      $mpdf->Output();
       date_default_timezone_set('Asia/Jakarta');
       
       
@@ -71,7 +71,7 @@ class CSPendaftaranController extends Controller
             $request->merge(['foto' =>  $timestamp.$file->getClientOriginalName()]);
         }
         //DB::beginTransaction();
-        
+      
         $user = Pendaftaran::where('email',$request->input('email'))->first();
         $email = $request->input('email');
         $name = $request->input('nama_lengkap');

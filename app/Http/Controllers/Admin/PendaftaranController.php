@@ -34,8 +34,8 @@ class PendaftaranController extends Controller
     }
     public function indexOnline()
     {
-        $pendaftar = Pendaftaran::where('foto', '!=', 'offline')->paginate(1);;
-       $pendaftarOnline = Pendaftaran::where('foto', '!=', 'offline')->paginate(1);
+        $pendaftar = Pendaftaran::where('foto', '!=', 'offline')->paginate(10);;
+       $pendaftarOnline = Pendaftaran::where('foto', '!=', 'offline')->paginate(10);
         
         
 
