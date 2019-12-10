@@ -16,11 +16,11 @@ use Mailjet\LaravelMailjet\MailjetServiceProvider;
 use \Mailjet\Resources;
 use App\Http\Controllers\Admin\PendaftaranController;
 use DateTime;
+use Mpdf\Mpdf;
 
 class CSPendaftaranController extends Controller
 {
-    var $acces_token = "";
-    static $gmt_token;
+    
     /**
      * Create a new controller instance.
      *
@@ -28,6 +28,9 @@ class CSPendaftaranController extends Controller
      */
     public function __construct()
     {
+      $mpdf = new mPDF();
+      // $mpdf->WriteHTML('Hello World');
+      // $mpdf->Output();
       date_default_timezone_set('Asia/Jakarta');
       
       
@@ -43,19 +46,6 @@ class CSPendaftaranController extends Controller
     {           
                 app('App\Http\Controllers\BrivaHelper')->getOrGenerateToken();
                 date_default_timezone_set('Asia/Jakarta');
-        // error_log('have been hit :)');
-        // $currentDate = date("Y-m-d");
-        // $currentTime = date("h:i:sa");
-        // $startTime = date('H:m',strtotime('-1 hour ',strtotime($currentTime)));
-        // $endTime = date('H:m',strtotime('+0 hour ',strtotime($currentTime)));
-        // $response = app('App\Http\Controllers\BrivaHelper')->getReportVaByHour($currentDate,$startTime,$endTime);
-        // var_dump( $response);
-                $startDate = "2019-11-06";
-                $endDate = "2019-11-06";
-                $startTime = "06:30";
-                $endTime = "13:30";
-
-                //$this->getReportVaByHour($startDate,$startTime,$endTime);
 
                 $propinsi = DB::table('propinsi')->pluck('nama_propinsi','id');
                 $pengumuman = Pengumuman::all();
@@ -81,6 +71,7 @@ class CSPendaftaranController extends Controller
             $request->merge(['foto' =>  $timestamp.$file->getClientOriginalName()]);
         }
         //DB::beginTransaction();
+        
         $user = Pendaftaran::where('email',$request->input('email'))->first();
         $email = $request->input('email');
         $name = $request->input('nama_lengkap');
@@ -105,13 +96,15 @@ class CSPendaftaranController extends Controller
         
         try 
         {
-        $pendaftaran = Pendaftaran::create($request->all());
-        app('App\Http\Controllers\BrivaHelper')->createEndpoint($nisn,$name);
-        app('App\Http\Controllers\MailingHelper')->pushNotificationEmail($email,$name,$nisn,$lokasi);
-        
+          DB::beginTransaction();
+          $pendaftaran = Pendaftaran::create($request->all());
+          app('App\Http\Controllers\BrivaHelper')->createEndpoint($nisn,$name);
+          app('App\Http\Controllers\MailingHelper')->pushNotificationEmail($email,$name,$nisn,$lokasi);
+          DB::commit();
         }
         catch( \Illuminate\Database\QueryException $e){
-            return back()->withErrors(['NISN ini ('.$request->input('NISN').') sudah terdaftar']);
+          DB::rollBack();
+          return back()->withErrors(['NISN ini ('.$request->input('NISN').') sudah terdaftar']);
         }
         catch(Exception $e)
         {

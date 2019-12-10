@@ -15,8 +15,14 @@ use DB;
 use DateTime;
 class BrivaHelper
 {
+  public static $institutionCode="J104408";
+  public static $brivaNo = "77777";
     
     public function __construct(){
+      
+     
+      
+
     }
 
     public function getOrGenerateToken(){
@@ -67,16 +73,15 @@ class BrivaHelper
   }
 
   public function createEndpoint($custCode,$nama){
-    $institutionCode = "J104408";
-    $brivaNo = "77777";
+    
     $amount="200000";
     $keterangan="Biaya Pendaftaran";
     $expiredDate="2017-09-10 09:57:26";
     $token = $this->getOrGenerateToken();
     $timestamp = gmdate("Y-m-d\TH:i:s.000\Z");
     $secret = "O0KvtNbiAjdaO59Z";
-    $datas = array('institutionCode' => $institutionCode ,
-     'brivaNo' => $brivaNo,
+    $datas = array('institutionCode' => self::$institutionCode ,
+     'brivaNo' => self::$brivaNo,
      'custCode' => $custCode,
      'nama' => $nama,
      'amount' => $amount,
@@ -113,14 +118,13 @@ class BrivaHelper
   public function getReportVaByHour($currentDate,$startTime,$endTime)
         {
 
-            $institutionCode = "J104408";
-            $brivaNo = "77777";
+            
             $custCode = "002876257";
             $verb = "GET";
             $secret = 'O0KvtNbiAjdaO59Z';
             $token = $this->getOrGenerateToken();
             $timestamp = gmdate("Y-m-d\TH:i:s.000\Z");
-            $path = "/sandbox/v1/briva/report_time/j104408/77777/".$currentDate."/".$startTime."/".$currentDate."/".$endTime;
+            $path = "/sandbox/v1/briva/report_time/".self::$brivaNo."/".self::$institutionCode."/".$currentDate."/".$startTime."/".$currentDate."/".$endTime;
             $base64sign = $this->generateSignature($path, $verb, $token, $timestamp, $body = '', $secret);
     
             $request_headers = array(
