@@ -28,10 +28,7 @@ class CSPengumumanController extends Controller
      */
     public function index()
     {
-        // if (! Gate::allows('pengumuman_access')) {
-        //     return abort(401);
-        // }
-
+        
 
                 $pengumuman = Pengumuman::all();
 
@@ -49,9 +46,7 @@ class CSPengumumanController extends Controller
         $pengumumans = \App\Pengumuman::where('id', $id)->get();
 
         $pengumuman = Pengumuman::findOrFail($id);
-        $pathToFile = "uploads/pengumuman";
-        $downloadPath = $pathToFile.$pengumuman->nama_file;
-
+        
         return view('client-side.pengumuman-show', compact('downloadPath','id', 'pengumuman','pengumumans'));
     }
 }

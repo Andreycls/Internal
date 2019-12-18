@@ -75,4 +75,7 @@ Route::group(['middleware' => ['auth'], 'prefix' => 'admin', 'as' => 'admin.'], 
     Route::get('image/upload','PengumumanController@fileCreate');
     Route::post('image/upload/store','PengumumanController@store');
     //Route::post('image/delete','PengumumanController@fileDestroy');
+
+    //Generate PDF
+    Route::get('generate/pdf/daftar_hadir', 'Admin\GenerateController@generateAll_DaftarHadir');
 });

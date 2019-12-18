@@ -84,7 +84,7 @@
                         </tr>
                         <tr>
                             <th>@lang('quickadmin.pendaftaran.fields.foto')</th>
-                            <td field-key='title'><img src="<?php echo url("uploads/{$pendaftar[0]->foto}")?>" width="200px" length="400px"></td>
+                            <td field-key='title'><img src="<?php echo url("uploads/foto{$pendaftar[0]->foto}")?>" width="200px" length="400px"></td>
                         </tr>
                         
                     </table>

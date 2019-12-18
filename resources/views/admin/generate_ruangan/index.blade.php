@@ -15,11 +15,15 @@
 
     <div class="panel panel-default">
         <div class="panel-heading">
-        
             @lang('quickadmin.generate_ruangan.fields.ruangan')
         </div>
         
         <div class="panel-body table-responsive">
+        Generate data daftar hadir : 
+        <a href="{{ url('admin/generate/pdf/daftar_hadir') }}" class="btn btn-xm btn-info ">Unduh</a>
+
+
+        <br>
         Jumlah Gedung &nbsp; :  &nbsp;   {{$gedung->count()}} <br>
         Jumlah Ruangan &nbsp;:  &nbsp;   {{$ruangan}} <br>
        <h2>Lokasi Ujian </h2>
@@ -77,6 +81,7 @@
         </div>
     </div>
 @stop
+
 
 @section('javascript') 
     <script>

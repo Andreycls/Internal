@@ -12,46 +12,181 @@ use App\Http\Controllers\Controller;
 use App\Http\Requests\Admin\StoreGedungRequest;
 use App\Http\Requests\Admin\UpdateGedungRequest;
 use Validator;
+use ZipArchive;
+use Mpdf\Mpdf;
 class GenerateController extends Controller
 {
-    //
-    /**
-     * Display a listing of Role.
-     *
-     * @return \Illuminate\Http\Response
-     */
-
-
+    
 
 
     public function index()
     {
         
-
         $kota = Kota::all();
         $gedung = Gedung::all();
         $totalPendaftar = Pendaftaran::count();        
         $ruangan = DB::table('gedung')->sum('banyak_ruangan');
-        //var_dump($kota[2]->nama_kota);
-        
-        $emails = array("ADMINS@ADMIN.COM,ADMIN@ADMIN.COM,ANDREYC@XLFUTURELEADERS.COM");
-        foreach ($emails as $email) {
-           
-            $this->updatePayment($email);
-            //var_dump($this->getLokasiByEmail($email));
-            $results = DB::select('select * from pendaftar where status_pembayaran = :id and lokasi = :kota', ['id' => "lunas",'kota'=>$this->getLokasiByEmail($email)]);
-            $result_count=count($results);
-            
-            //$affected = DB::update('update pendaftar set index_pendaftar = ? where email = ?',[$result_count,$email]);
-            $results=0;
-       
-            
-        }
-
-                
-
         return view('admin.generate_ruangan.index',compact('gedung','kota','totalPendaftar','ruangan'));
     }
+    
+    public static function generateAll_DaftarHadir(){
+        $zip = new ZipArchive();
+        $zipFile = tempnam('/tmp', 'zip');
+        $zip->open($zipFile, ZipArchive::CREATE);
+        $listKota = DB::table('kota')->pluck('nama_kota');
+        foreach($listKota as $namaKota){
+            $listGedung = \App\Gedung::where('kota', $namaKota)->get();
+            foreach($listGedung as $namaGedung){
+                for ($nomorRuangan = 0; $nomorRuangan < 2; $nomorRuangan++) {
+                    $mpdf = self::generatePdfByNomorRuangan($namaKota,$namaGedung->nama_gedung,$nomorRuangan);
+                    $pdfData = $mpdf->Output("", \Mpdf\Output\Destination::STRING_RETURN);
+                    $zip->addFromString("Daftar hadir ".$namaKota." - ".$namaGedung->nama_gedung." Ruangan {$nomorRuangan}.pdf", $pdfData);
+                }
+            }
+        }
+        $zip->close();
+        header("Content-type: application/zip");
+        header('Content-Disposition: attachment; filename=Daftar_hadir_all.zip'); 
+        readfile($zipFile);
+        unlink($zipFile);
+        exit;
+    }
+    public static function generateDenah($nomorRuangan){
+
+
+    }
+
+    public static function fillLokasiPeserta(){
+
+
+    }
+     
+    public static function generatePdfByNamaKota($namaKota){
+        $totalPendaftar = Pendaftaran::count(); 
+        $pendaftar = Pendaftaran::all();
+        $html="
+        <style>
+       
+            table {
+                font-family: arial, sans-serif;
+                border-collapse: collapse;
+                width: 100%;
+            }
+
+            td, th {
+                border: 1px solid #dddddd;
+                text-align: left;
+                padding: 8px;
+            }
+
+            tr:nth-child(even) {
+                background-color: #dddddd;
+            }   
+        </style>
+        <p> Nama Kota : ".$namaKota."<p>
+<table style='width:100%'><tr>
+        <th align='center'>Nomor</th>
+        <th align='center'>Nomor Ujian</th> 
+        <th align='center'>Nama</th>
+        <th align='center'>Tanda Tangan</th>
+      </tr>";
+        for ($i = 0; $i <= $totalPendaftar; $i++)
+        {
+            $html .= "
+            
+            <tr>
+              <td >".($i+1)."</td>
+              <td>".$pendaftar[$i]['nomor_pendaftaran']."</td>
+              <td>".$pendaftar[$i]['nama_lengkap']."</td>";
+
+              if($i%2>0){
+                $html .= " <td align='right'>".($i+1)." _________  </td>";
+              }
+              else{
+                $html .= " <td align='left'>".($i+1)." _________  </td>";
+              }
+        }
+        $html .=" </tr>
+                </table>";
+        $mpdf=new mPDF();
+        $mpdf->WriteHTML($html);
+        $mpdf->SetDisplayMode('fullpage');
+        $mpdf->Output();
+
+    }
+
+
+    public static function generatePdfByNomorRuangan($namaKota,$namaGedung,$nomorRuangan){
+        $totalPendaftar = Pendaftaran::count(); 
+        $pendaftar = Pendaftaran::all();
+        $html="
+        <style>
+       
+            table {
+                font-family: arial, sans-serif;
+                border-collapse: collapse;
+                width: 100%;
+            }
+            
+
+            td, th {
+                border: 1px solid #dddddd;
+                text-align: left;
+                padding: 8px;
+            }
+
+            tr:nth-child(even) {
+                background-color: #dddddd;
+            }   
+        </style>
+        <p> Lokasi ujian : ".$namaKota."</p>
+        <p> Nama gedung : ".$namaGedung."</p>
+        <p> Nomor ruangan : ".$nomorRuangan."<p>
+<table style='width:100%'><tr>
+        <th align='center'>Nomor</th>
+        <th align='center'>Nomor Ujian</th> 
+        <th align='center'>Nama</th>
+        <th align='center'>Tanda Tangan</th>
+      </tr>";
+        for ($i = 0; $i <30; $i++)
+        {
+            $html .= "
+            
+            <tr>
+              <td width='40' align='center'>".($i+1)."</td>";
+
+            if(isset($pendaftar[$i])){
+            $html .= "
+            
+              <td width='200' align='left'> ".$pendaftar[$i]['nomor_pendaftaran']."</td>
+              <td width='200' align='left'>".$pendaftar[$i]['nama_lengkap']."</td>";
+            }
+            else{
+                $html .= "
+              <td width='200' align='left'> </td>
+              <td width='200' align='left'></td>";
+                
+
+            }
+              if($i%2>0){
+                $html .= " <td align='right' width='200'>".($i+1)." _________  </td>";
+              }
+              else{
+                $html .= " <td align='left' width='200'>".($i+1)." _________  </td>";
+              }
+        }
+        $html .=" </tr>
+                </table>";
+       
+
+        $mpdf=new mPDF();
+        $mpdf->WriteHTML($html);
+        $mpdf->SetDisplayMode('fullpage');
+        //$content = $mpdf->Output('Daftar Hadir Ruangan '.$nomorRuangan.'.pdf', 'I');
+        return $mpdf;
+       
+    }
+
     public static function totalPendaftar($kota)
     {  
         $totalPendaftar = Pendaftaran::where('lokasi','=',$kota)->get()->count();

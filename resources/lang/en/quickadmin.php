@@ -48,7 +48,7 @@ return [
 
 	
 	'generate_ruangan' => [
-		'title' => 'Generate Denah',
+		'title' => 'Generate File',
 		'fields' => [
 			'ruangan' => 'Ruangan',
 			'dafol' => 'Pendaftaran Offline',
@@ -83,7 +83,7 @@ return [
 		],
 	],
 	'ruangan-management' => [
-		'title' => 'Manajemen Ruangan',
+		'title' => 'Manajemen File',
 		'fields' => [
 		],
 	],

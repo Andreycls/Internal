@@ -28,9 +28,9 @@ class CSPendaftaranController extends Controller
      */
     public function __construct()
     {
-      $mpdf = new mPDF();
-      $mpdf->WriteHTML('Hello World');
-      $mpdf->Output();
+      // $mpdf = new mPDF();
+      // $mpdf->WriteHTML('Hello World');
+      // $mpdf->Output();
       date_default_timezone_set('Asia/Jakarta');
       
       
@@ -67,7 +67,7 @@ class CSPendaftaranController extends Controller
         $timestamp = gmdate("Y-m-d\TH:i:s.000\Z");
         if(Input::hasFile('file')){
 			      $file = Input::file('file');
-            $file->move('uploads', $timestamp.$file->getClientOriginalName());
+            $file->move('uploads/foto', $timestamp.$file->getClientOriginalName());
             $request->merge(['foto' =>  $timestamp.$file->getClientOriginalName()]);
         }
         //DB::beginTransaction();
