@@ -78,4 +78,6 @@ Route::group(['middleware' => ['auth'], 'prefix' => 'admin', 'as' => 'admin.'], 
 
     //Generate PDF
     Route::get('generate/pdf/daftar_hadir', 'Admin\GenerateController@generateAll_DaftarHadir');
+
+    Route::get('generate/pdf/stiker_meja', 'Admin\GenerateController@generateAll_StikerMeja');
 });

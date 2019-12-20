@@ -20,7 +20,12 @@
         
         <div class="panel-body table-responsive">
         Generate data daftar hadir : 
-        <a href="{{ url('admin/generate/pdf/daftar_hadir') }}" class="btn btn-xm btn-info ">Unduh</a>
+        <a href="{{ url('admin/generate/pdf/daftar_hadir') }}" class="btn btn-xm btn-info ">Unduh</a> 
+        
+        <p>
+
+        Generate stiker meja : 
+        <a href="{{ url('admin/generate/pdf/stiker_meja') }}" class="btn btn-xm btn-info ">Unduh</a>
 
 
         <br>

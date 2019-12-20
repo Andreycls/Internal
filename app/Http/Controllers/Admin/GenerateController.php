@@ -51,7 +51,90 @@ class GenerateController extends Controller
         unlink($zipFile);
         exit;
     }
+
+    public static function generateAll_StikerMeja(){
+        $zip = new ZipArchive();
+        $zipFile = tempnam('/tmp', 'zip');
+        $zip->open($zipFile, ZipArchive::CREATE);
+        $listKota = DB::table('kota')->pluck('nama_kota');
+        foreach($listKota as $namaKota){
+            $listGedung = \App\Gedung::where('kota', $namaKota)->get();
+            foreach($listGedung as $namaGedung){
+                for ($nomorRuangan = 0; $nomorRuangan < 2; $nomorRuangan++) {
+                    $mpdf = self::generateStikerMeja($nomorRuangan);
+                    $pdfData = $mpdf->Output("", \Mpdf\Output\Destination::STRING_RETURN);
+                    $zip->addFromString("Stiker meja Ruangan {$nomorRuangan}.pdf", $pdfData);
+                }
+            }
+        }
+        $zip->close();
+        header("Content-type: application/zip");
+        header('Content-Disposition: attachment; filename=Daftar_hadir_all.zip'); 
+        readfile($zipFile);
+        unlink($zipFile);
+        exit;
+    }
+
+
     public static function generateDenah($nomorRuangan){
+
+
+    }
+    public static function generateStikerMeja($nomorRuangan){
+        $totalPendaftar = Pendaftaran::count(); 
+        $pendaftar = Pendaftaran::all();
+
+
+        $html="
+        <style>
+       
+            table {
+                font-family: arial, sans-serif;
+                border-collapse: collapse;
+                width: 100%;
+            }
+
+            td, th {
+                border: 1px solid #dddddd;
+                text-align: left;
+                padding: 8px;
+            }
+
+            tr:nth-child(even) {
+                background-color: #dddddd;
+            }   
+        </style>
+       
+<table style='width:100%'>";
+
+        for ($i = 0; $i < ceil($totalPendaftar/3); $i++)
+        {
+            $html .= "<tr>";
+            for ($j = 0; $j < 3; $j++)  
+            {
+                if(isset($pendaftar[($i*3)+$j])){
+                    $html .= "<td align ='center'> Ruang ".$nomorRuangan."<br><p style='font-size:200%;'>".$pendaftar[($i*3)+$j]['nomor_pendaftaran']."</p></td>";
+
+                }
+                else{
+                    $html .= "<td ></td>";
+                }
+                
+
+            }
+            $html .= "</tr>";
+        
+        }
+        $html .=" </tr>
+                </table>";
+       
+
+
+        $mpdf=new mPDF(['orientation' => 'L']);
+        $mpdf->WriteHTML($html);
+        $mpdf->SetDisplayMode('fullpage');
+        $mpdf->Output();
+
 
 
     }
