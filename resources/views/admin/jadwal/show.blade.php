@@ -88,18 +88,7 @@
                         
                     </table>
                 </div>
-            </div><!-- Nav tabs -->
-<!--
-<ul class="nav nav-tabs" role="tablist">
-    
-<li role="presentation" class="active"><a href="#expensecategory" aria-controls="expensecategory" role="tab" data-toggle="tab">Expense Categories</a></li>
-<li role="presentation" class=""><a href="#incomecategory" aria-controls="incomecategory" role="tab" data-toggle="tab">Income categories</a></li>
-<li role="presentation" class=""><a href="#currency" aria-controls="currency" role="tab" data-toggle="tab">Currency</a></li>
-<li role="presentation" class=""><a href="#income" aria-controls="income" role="tab" data-toggle="tab">Income</a></li>
-<li role="presentation" class=""><a href="#expense" aria-controls="expense" role="tab" data-toggle="tab">Expenses</a></li>
-</ul>
--->
-
+            </div>
         </div>
     </div>
 @stop

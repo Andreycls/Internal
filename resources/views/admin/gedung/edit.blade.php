@@ -60,11 +60,9 @@
                     @endif
                 </div>
             </div>
-            
         </div>
     </div>
 
-    {!! Form::submit(trans('quickadmin.qa_update'), ['class' => 'btn btn-danger']) !!}
+    {!! Form::submit(trans('quickadmin.qa_update'), ['class' => 'btn btn-info']) !!}
     {!! Form::close() !!}
 @stop
-

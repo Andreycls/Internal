@@ -117,7 +117,6 @@ class BrivaHelper
   public function getReportVaByHour($currentDate,$startTime,$endTime)
         {
 
-            
             $custCode = "002876257";
             $verb = "GET";
             $secret = 'O0KvtNbiAjdaO59Z';

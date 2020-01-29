@@ -61,11 +61,26 @@ Route::group(['middleware' => ['auth'], 'prefix' => 'admin', 'as' => 'admin.'], 
     Route::resource('gedung','Admin\GedungController');
     Route::resource('ruangan','Admin\RuanganController');
     Route::resource('kota','Admin\KotaController');
-    Route::resource('pendaftaran','Admin\PendaftaranController');
+    Route::resource('pendaftaran',  'Admin\PendaftaranController');
+    Route::resource('generate',     'Admin\GenerateController');
+    Route::post('generate_kartu',[
+        'as' => 'generate.kartu',
+        'uses' => 'Admin\GenerateController@generateKartuOffline'
+    ]);
+
+    //Route::post('generate_kartu/{nisn}','Admin\GenerateController@generateKartu');
+
     // singgung ke online
     Route::get('pendaftar/list_pendaftar_online','Admin\PendaftaranController@indexOnline');
     Route::get('pendaftar/list_pendaftar_offline','Admin\PendaftaranController@index');
-    Route::resource('generate','Admin\GenerateController');
+    Route::get('pendaftar/verifikasi','Admin\PendaftaranController@verifikasi');
+    //Route::post('pendaftar/verify', 'Admin\PendaftaranController@verify')->name('verify');
+    Route::post('pendaftar/verify',[
+        'as' => 'pendaftaran.verify',
+        'uses' => 'PendaftaranController@verify'
+    ]);
+
+    Route::post('generate/excel', 'Admin\GenerateController@generateDataFromExcel')->name('generate');
     
     Route::get("addmore","GedungController@addMore");
     Route::post("addmore","Gedung@addMorePost");
@@ -79,5 +94,12 @@ Route::group(['middleware' => ['auth'], 'prefix' => 'admin', 'as' => 'admin.'], 
     //Generate PDF
     Route::get('generate/pdf/daftar_hadir', 'Admin\GenerateController@generateAll_DaftarHadir');
 
-    Route::get('generate/pdf/stiker_meja', 'Admin\GenerateController@generateAll_StikerMeja');
+    Route::get('generate/pdf/stiker_meja',  'Admin\GenerateController@generateAll_StikerMeja');
+
+    Route::get('generate/pdf/denah',        'Admin\GenerateController@generateAll_Denah');
+
+    Route::get('generate/pdf/data_peserta', 'Admin\GenerateController@generateAll_DataPeserta');
+
+    Route::get('generate/pdf/kartu_peserta/{NISN}', 'Admin\GenerateController@generateKartuPeserta');
+
 });

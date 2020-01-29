@@ -9,6 +9,7 @@ use Illuminate\Support\Facades\Gate;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Admin\StoreJadwalRequest;
 use App\Http\Requests\Admin\UpdateJadwalRequest;
+use DB;
 
 class JadwalController extends Controller
 {
@@ -19,8 +20,8 @@ class JadwalController extends Controller
      */
     public function index()
     {
-                $jadwal = Jadwal::all();
-                $gedung = Gedung::all();
+        $jadwal = Jadwal::all();
+        $gedung = Gedung::all();
         return view('admin.jadwal.index', compact('jadwal','gedung'));
     }
 
@@ -31,12 +32,8 @@ class JadwalController extends Controller
      */
     public function create()
     {
-        if (! Gate::allows('role_create')) {
-            return abort(401);
-        }
         $Jadwal = \App\Jadwal::get()->pluck('question', 'id')->prepend(trans('quickadmin.qa_please_select'), '');
         $kota = Kota::all();
-        
         return view('admin.jadwal.create',compact('kota'));
     }
 
@@ -48,12 +45,19 @@ class JadwalController extends Controller
      */
     public function store(StoreJadwalRequest $request_)
     {
-        // 
-        $Jadwal = Jadwal::create($request_->all());
-
-
-
-        return redirect()->route('admin.jadwal.index');
+        try{
+            $kota = $request_->input('kota');
+            $encodeKota = json_encode($kota);
+            $request_->merge(['kota' => $encodeKota]);
+            DB::beginTransaction();
+            $Jadwal = Jadwal::create($request_->all());
+            DB::commit();
+            return redirect()->route('admin.jadwal.index');
+        }catch(Exception $e){
+            DB::rollback();
+            return back()->withErrors(['Gagal. Mohon ulangi kembali proses input']);
+        }
+           
     }
 
 
@@ -69,7 +73,6 @@ class JadwalController extends Controller
         $kota = Kota::all();
         $gedung = Gedung::all();
         $jadwal = Jadwal::find($id);
-
         return view('admin.jadwal.edit', compact('jadwal','gedung','kota'));
     }
 
@@ -82,13 +85,19 @@ class JadwalController extends Controller
      */
     public function update(UpdateJadwalRequest $request, $id)
     {
-        
         $jadwal = Jadwal::findOrFail($id);
-        $jadwal->update($request->all());
-
-
-
-        return redirect()->route('admin.jadwal.index');
+        try{
+            $kota = $request->input('kota');
+            $encodeKota = json_encode($kota);
+            $request->merge(['kota' => $encodeKota]);
+            DB::beginTransaction();
+            $jadwal->update($request->all());
+            DB::commit();
+            return redirect()->route('admin.jadwal.index');
+        }catch(Exception $e){
+            DB::rollback();
+            return back()->withErrors(['Gagal. Mohon ulangi kembali proses input']);
+        }
     }
 
 
@@ -100,11 +109,8 @@ class JadwalController extends Controller
      */
     public function show($id)
     {
-        
         $jadwals = \App\Jadwal::where('id', $id)->get();
-
         $jadwal = Jadwal::findOrFail($id);
-
         return view('admin.jadwal.show', compact('id', 'jadwal','jadwals'));
     }
 
@@ -117,30 +123,8 @@ class JadwalController extends Controller
      */
     public function destroy($id)
     {
-        
         $Jadwal = Jadwal::findOrFail($id);
         $Jadwal->delete();
-
         return redirect()->route('admin.jadwal.index');
     }
-
-    /**
-     * Delete all selected Role at once.
-     *
-     * @param Request $request
-     */
-    public function massDestroy(Request $request)
-    {
-        if (! Gate::allows('Jadwal_delete')) {
-            return abort(401);
-        }
-        if ($request->input('id')) {
-            $entries = Jadwal::whereIn('id', $request->input('id'))->get();
-
-            foreach ($entries as $entry) {
-                $entry->delete();
-            }
-        }
-    }
-
 }

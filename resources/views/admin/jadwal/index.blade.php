@@ -4,11 +4,6 @@
 @section('content')
 
 
-
-
-
-
-
     <h3 class="page-title">@lang('quickadmin.jadwal.title')</h3>
     
     @can('pengumuman_create')
@@ -18,8 +13,6 @@
         
     </p>
     @endcan
-
-    
 
     <div class="panel panel-default">
         <div class="panel-heading">
@@ -90,14 +83,4 @@
         </div>
     </div>
 @stop
-
-@section('javascript') 
-    <script>
-        @can('user_delete')
-            window.route_mass_crud_entries_destroy = '{{ route('admin.pengumuman.mass_destroy') }}';
-        @endcan
-
-    </script>
-@endsection
-
 

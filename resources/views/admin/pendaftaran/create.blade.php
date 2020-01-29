@@ -3,17 +3,18 @@
 @section('content')
 <meta name="_token" content="{{csrf_token()}}" />
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/dropzone/5.4.0/min/dropzone.min.css">
+    
     <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/dropzone/5.4.0/dropzone.js"></script>
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.js"></script>
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
    
 </head>
 <h3 class="page-title">@lang('quickadmin.pendaftar.fields.pendaftaranOffline')</h3>
     
 {!! Form::open(['method' => 'POST', 'route' => ['admin.pendaftaran.store']]) !!}
-    
+
+</head>
+<body>
+
 <script type="text/javascript">
         Dropzone.options.dropzone =
          {
@@ -78,8 +79,8 @@
         <div class="row">
                 <div class="col-xs-12 form-group">
                 {!! Form::label('nisn', trans('quickadmin.pendaftaran.fields.lokasi'), ['class' => 'control-label']) !!}
-                <select name="lokasi" class="form-control">
-                                        <option value="">-- Pilih Lokasi --</option>
+                <select name="lokasi" class="form-control" required>
+                                        <option value="" disabled selected hidden>Pilih lokasi ujian</option>
                                         @foreach ($kota as $kotas => $val)
                                         <option value="{{ $val }}"> {{ $val }}</option>   
                                         @endforeach
@@ -95,10 +96,9 @@
             <div class="row">
                 <div class="col-xs-12 form-group">
                 {!! Form::label('nama_kota', trans('quickadmin.pendaftaran.fields.nama').' ', ['class' => 'control-label']) !!}
-                <input type="text" name="nama_lengkap" id="nama_lengkap" class= 'form-control' onchange="upperMe()" />
+                <input type="text" name="nama_lengkap" id="nama_lengkap" class= 'form-control' onchange="upperMe()" required />
     
-                
-    
+            
                     <p class="help-block"></p>
                     @if($errors->has('nama_lengkap'))
                         <p class="help-block">
@@ -107,7 +107,6 @@
                     @endif
                 </div>
             </div>
-            <!-- <input type = "hidden" name = "author" value = "{{Auth::user()->name}}">         -->
             <div class="row">
                 <div class="col-xs-12 form-group">
                 {!! Form::label('nisn', trans('quickadmin.pendaftaran.fields.nisn'), ['class' => 'control-label']) !!}
@@ -124,7 +123,7 @@
             <div class="row">
                 <div class="col-xs-12 form-group">
                 {!! Form::label('nisn', trans('quickadmin.pendaftaran.fields.email'), ['class' => 'control-label']) !!}
-                <input type="text" name="email" id="email" class= 'form-control' onchange="upperMe()" />
+                <input type="text" name="email" id="email" class= 'form-control' onchange="upperMe()" required />
     
                     <p class="help-block"></p>
                     @if($errors->has('email'))
@@ -176,8 +175,7 @@
                 <div class="col-xs-12 form-group">
                 {!! Form::label('nisn', trans('quickadmin.pendaftaran.fields.ttl'), ['class' => 'control-label']) !!}<p>
                 
-                <input type="text" name="tempat_lahir" id="tempat_lahir" class= 'ttl' onchange="upperMe()" />  /  {!! Form::date('tanggal_lahir', old('tanggal_lahir'), ['class' => 'date ttl', 'placeholder' => '', 'required' => '']) !!} 
-  
+                <input type="text" name="tempat_lahir" id="tempat_lahir" class= 'ttl' onchange="upperMe()" required />  /  {!! Form::date('tanggal_lahir', old('tanggal_lahir'), ['class' => 'date ttl', 'placeholder' => '', 'required' => '','max'=>date("Y-m-d")]) !!}
                     <p class="help-block"></p>
                     @if($errors->has('tempat_lahir'))
                         <p class="help-block">
@@ -191,7 +189,7 @@
                 <div class="col-xs-12 form-group">
                 {!! Form::label('nisn', trans('quickadmin.pendaftaran.fields.provinsi'), ['class' => 'control-label']) !!}
                 <select id="provinsi" name="provinsi" class="form-control">
-                                        
+                                        <option value="" disabled selected hidden>Pilih propinsi</option>
                                         @foreach ($propinsi as $propinsis => $value)
                                         <option value="{{ $propinsis }}"> {{ $value }}</option>   
                                         @endforeach
@@ -209,8 +207,7 @@
                 <div class="col-xs-12 form-group">
                 {!! Form::label('nisn', trans('quickadmin.pendaftaran.fields.kab'), ['class' => 'control-label']) !!}
                 <select name="kabkota" class="form-control">
-                                     <option>-- Pilih Kabupaten / Kota --</option>
-
+                                     <option value="" disabled selected hidden>Pilih Kabupaten / Kota</option>
                                  </select>
                     <p class="help-block"></p>
                     @if($errors->has('kabkota'))
@@ -225,8 +222,13 @@
             <div class="row">
                 <div class="col-xs-12 form-group">
                 {!! Form::label('nisn', trans('quickadmin.pendaftaran.fields.smp'), ['class' => 'control-label']) !!}<p>
-                <input type="text" name="smp" id="smp" class= 'form-control' onchange="upperMe()" /></th> 
-  
+                
+                <input list="brow" name="smp" class= 'form-control' onchange="upperMe()" required>
+                    <datalist id="brow" >
+                    @foreach ($smp as $sekolah => $value)
+                        <option value="{{ $value }}"> {{ $value }}</option>   
+                    @endforeach
+                    </datalist>  
                 
                     <p class="help-block"></p>
                     @if($errors->has('smp'))
@@ -254,7 +256,7 @@
             <div class="row">
                 <div class="col-xs-12 form-group">
                 {!! Form::label('nisn', trans('quickadmin.pendaftaran.fields.namaAyah'), ['class' => 'control-label']) !!}<p>
-                <input type="text" name="nama_ayah" id="nama_ayah" class= 'form-control' onchange="upperMe()" />
+                <input type="text" name="nama_ayah" id="nama_ayah" class= 'form-control' onchange="upperMe()" required />
   
                
                     <p class="help-block"></p>
@@ -269,7 +271,7 @@
             <div class="row">
                 <div class="col-xs-12 form-group">
                 {!! Form::label('nisn', trans('quickadmin.pendaftaran.fields.namaIbu'), ['class' => 'control-label']) !!}<p>
-                <input type="text" name="nama_ibu" id="nama_ibu" class= 'form-control' onchange="upperMe()" />
+                <input type="text" name="nama_ibu" id="nama_ibu" class= 'form-control' onchange="upperMe()" required />
   
                     <p class="help-block"></p>
                     @if($errors->has('nama_ibu'))
@@ -295,9 +297,8 @@
             <div class="row">
                 <div class="col-xs-12 form-group">
                 {!! Form::label('nisn', trans('quickadmin.pendaftaran.fields.pekerjaanAyah'), ['class' => 'control-label']) !!}<p>
-                <input type="text" name="pekerjaan_ayah" id="pekerjaan_ayah" class= 'form-control' onchange="upperMe()" />
+                <input type="text" name="pekerjaan_ayah" id="pekerjaan_ayah" class= 'form-control' onchange="upperMe() required" />
   
-                
                     <p class="help-block"></p>
                     @if($errors->has('pekerjaan_ayah'))
                         <p class="help-block">
@@ -310,11 +311,11 @@
             <div class="row">
                 <div class="col-xs-12 form-group">
                 {!! Form::label('nisn', trans('quickadmin.pendaftaran.fields.pekerjaanIbu'), ['class' => 'control-label']) !!}<p>
-                <input type="text" name="pekerjaan_ibu" id="pekerjaan_ibu" class= 'form-control' onchange="upperMe()" />
+                <input type="text" name="pekerjaan_ibu" id="pekerjaan_ibu" class= 'form-control' onchange="upperMe()" required />
                 <div class="row">
                 <div class="col-xs-12 form-group">
                 {!! Form::label('nisn', trans('quickadmin.pendaftaran.fields.alamatOT'), ['class' => 'control-label']) !!}<p>
-                <input type="text" name="alamat_orangtua" id="alamat_orangtua" class= 'form-control' onchange="upperMe()" />
+                <input type="text" name="alamat_orangtua" id="alamat_orangtua" class= 'form-control' onchange="upperMe()" required />
   
                 
                     <p class="help-block"></p>
@@ -325,13 +326,7 @@
                     @endif
                 </div>
             </div>
-                
-                
-                <input type="hidden" name="nomor_pendaftaran" id="nomor_pendaftaran" value=""/>
-                <p id="demo"></p>
-               <!-- <input type="hidden" name="provinsi" id="provinsi_" value=""/>  -->
-                
-          
+               
                 <script type="text/javascript">
                 function pad(n, width, z) {
                     z = z || '0';
@@ -365,8 +360,7 @@
             </div>
 
 
-            <input type="hidden" name="foto" id="foto" value="offline">
-            <input type="hidden" name="file" id="file" value="offline">
+            
             <script > 
 function upperMe() { 
     document.getElementById("nama_lengkap").value = document.getElementById("nama_lengkap").value.toUpperCase(); 
@@ -380,23 +374,6 @@ function upperMe() {
     document.getElementById("alamat_orangtua").value = document.getElementById("alamat_orangtua").value.toUpperCase(); 
 } 
 </script>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 
 <script type="text/javascript">

@@ -38,7 +38,8 @@ return [
     |
     */
 
-    'debug' => env('APP_DEBUG', false),
+    //'debug' => env('APP_DEBUG', false),
+     'debug' =>  false,
 
     /*
     |--------------------------------------------------------------------------
@@ -153,6 +154,8 @@ return [
         /*
          * Laravel Framework Service Providers...
          */
+        Maatwebsite\Excel\ExcelServiceProvider::class,
+        Intervention\Image\ImageServiceProvider::class,
         Mailjet\LaravelMailjet\MailjetServiceProvider::class,
         Mailjet\LaravelMailjet\MailjetMailServiceProvider::class,
         Illuminate\Auth\AuthServiceProvider::class,
@@ -208,6 +211,8 @@ return [
     */
 
     'aliases' => [
+        'Excel' => Maatwebsite\Excel\Facades\Excel::class,
+        'Image' => Intervention\Image\Facades\Image::class,
         'Mailjet' => Mailjet\LaravelMailjet\Facades\Mailjet::class,
         'Lava' => Khill\Lavacharts\Laravel\LavachartsFacade::class,
         'App' => Illuminate\Support\Facades\App::class,

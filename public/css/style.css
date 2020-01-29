@@ -581,10 +581,10 @@ center{
 3.4 Clients
 **********************************************************************/
  .client-slider img {
-    border:1px solid white;
+    border:0px solid white;
 }
 .client-slider img:hover {
-    background-color:#6b2222;
+    background-color:#b1b5ce;
 }
 .client-nav {
     list-style:none;

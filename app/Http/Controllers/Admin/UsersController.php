@@ -8,6 +8,7 @@ use Illuminate\Support\Facades\Gate;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Admin\StoreUsersRequest;
 use App\Http\Requests\Admin\UpdateUsersRequest;
+use DB;
 
 class UsersController extends Controller
 {
@@ -18,13 +19,7 @@ class UsersController extends Controller
      */
     public function index()
     {
-        if (! Gate::allows('user_access')) {
-            return abort(401);
-        }
-
-
-                $users = User::all();
-
+        $users = User::all();
         return view('admin.users.index', compact('users'));
     }
 
@@ -35,12 +30,7 @@ class UsersController extends Controller
      */
     public function create()
     {
-        if (! Gate::allows('user_create')) {
-            return abort(401);
-        }
-        
         $roles = \App\Role::get()->pluck('title', 'id')->prepend(trans('quickadmin.qa_please_select'), '');
-
         return view('admin.users.create', compact('roles'));
     }
 
@@ -52,14 +42,15 @@ class UsersController extends Controller
      */
     public function store(StoreUsersRequest $request)
     {
-        if (! Gate::allows('user_create')) {
-            return abort(401);
-        }
-        $user = User::create($request->all());
-
-
-
-        return redirect()->route('admin.users.index');
+        try{
+            DB::beginTransaction();
+            $user = User::create($request->all());
+            DB::commit();
+            return redirect()->route('admin.users.index');
+        }catch(Exception $e){
+            DB::rollback();
+            return back()->withErrors(['Gagal. Mohon ulangi kembali proses input']);
+        } 
     }
 
 
@@ -71,14 +62,8 @@ class UsersController extends Controller
      */
     public function edit($id)
     {
-        if (! Gate::allows('user_edit')) {
-            return abort(401);
-        }
-        
         $roles = \App\Role::get()->pluck('title', 'id')->prepend(trans('quickadmin.qa_please_select'), '');
-
         $user = User::findOrFail($id);
-
         return view('admin.users.edit', compact('user', 'roles'));
     }
 
@@ -91,15 +76,18 @@ class UsersController extends Controller
      */
     public function update(UpdateUsersRequest $request, $id)
     {
-        if (! Gate::allows('user_edit')) {
-            return abort(401);
-        }
         $user = User::findOrFail($id);
-        $user->update($request->all());
-
-
-
-        return redirect()->route('admin.users.index');
+        try{
+            DB::beginTransaction();
+            $user->update($request->all());
+            DB::commit();
+            return redirect()->route('admin.users.index');
+        }catch(Exception $e){
+            DB::rollback();
+            return back()->withErrors(['Gagal. Mohon ulangi kembali proses input']);
+        } 
+        
+        
     }
 
 
@@ -111,19 +99,9 @@ class UsersController extends Controller
      */
     public function show($id)
     {
-        if (! Gate::allows('user_view')) {
-            return abort(401);
-        }
         
         $roles = \App\Role::get()->pluck('title', 'id')->prepend(trans('quickadmin.qa_please_select'), '');
-        // $expense_categories = \App\ExpenseCategory::where('created_by_id', $id)->get();
-        // $income_categories = \App\IncomeCategory::where('created_by_id', $id)->get();
-        // $currencies = \App\Currency::where('created_by_id', $id)->get();
-        // $incomes = \App\Income::where('created_by_id', $id)->get();
-        // $expenses = \App\Expense::where('created_by_id', $id)->get();
-
         $user = User::findOrFail($id);
-
         return view('admin.users.show', compact('user', 'expense_categories', 'income_categories', 'currencies', 'incomes', 'expenses'));
     }
 
@@ -136,32 +114,12 @@ class UsersController extends Controller
      */
     public function destroy($id)
     {
-        if (! Gate::allows('user_delete')) {
-            return abort(401);
-        }
+        
         $user = User::findOrFail($id);
         $user->delete();
-
         return redirect()->route('admin.users.index');
     }
 
-    /**
-     * Delete all selected User at once.
-     *
-     * @param Request $request
-     */
-    public function massDestroy(Request $request)
-    {
-        if (! Gate::allows('user_delete')) {
-            return abort(401);
-        }
-        if ($request->input('ids')) {
-            $entries = User::whereIn('id', $request->input('ids'))->get();
-
-            foreach ($entries as $entry) {
-                $entry->delete();
-            }
-        }
-    }
+    
 
 }

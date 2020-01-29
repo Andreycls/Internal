@@ -30,12 +30,9 @@ class Pendaftaran extends Model
                            'pekerjaan_ibu',
                            'alamat_orangtua',
                            'foto',
-                           'nomor_pendaftaran'
-                           
-
-                        
-                        
-                        
+                           'nomor_pendaftaran',
+                           'index_pendaftar',
+                           'status_pembayaran'
                         
                         ];
     protected $table = 'pendaftar';

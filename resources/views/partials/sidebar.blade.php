@@ -114,6 +114,14 @@
                             </span>
                         </a>
                     </li>
+                    <li class="{{ $request->segment(2) == 'roles' ? 'active active-sub' : '' }}">
+                        <a href="{{ url('admin/pendaftar/verifikasi') }}">
+                            <i class="fa fa-group"></i>
+                            <span class="title">    
+                                @lang('quickadmin.pendaftar.fields.verifikasi')
+                            </span>
+                        </a>
+                    </li>
                 </ul>
             </li>
             @endcan

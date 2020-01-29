@@ -6,7 +6,7 @@
         <div class="panel panel-default">
             <div class="panel-heading">
             <p style="text-align:center">
-            <img align = "top" width="100" height="100" src="images/yasop_logo.png"  alt="Logo" >
+            <img align = "top" width="100" height="100" src="images/yasop_logo.jpeg"  alt="Logo" >
             <br>
 
             {{ ucfirst(config('app.name')) }} @lang('quickadmin.qa_login')

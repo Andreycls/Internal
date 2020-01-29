@@ -10,7 +10,7 @@
     <head>
         <meta charset=utf-8>
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <title>SPSB Asrama Yayasan Soposurung</title>
+        <title>SPSB Asrama Yayasan Tunas Bangsa Soposurung</title>
         <!-- Load Roboto font -->
         <link href="//netdna.bootstrapcdn.com/font-awesome/4.1.0/css/font-awesome.min.css" rel="stylesheet">
         <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.8.1/css/all.css" integrity="sha384-50oBUHEmvpQ+1lW4y57PTFmhCaXp0ML5d60M1M7uH2+nqUivzIebhndOJK28anvf" crossorigin="anonymous">
@@ -27,11 +27,11 @@
         <link rel="stylesheet" type="text/css" href="{{ asset('css/jquery.bxslider.css') }}" />
         <link rel="stylesheet" type="text/css" href="{{ asset('css/animate.css') }}" />
         <!-- Fav and touch icons -->
-        <link rel="apple-touch-icon-precomposed" sizes="144x144" href="{{ asset('images/yasop_logo.png') }}">
-        <link rel="apple-touch-icon-precomposed" sizes="114x114" href="{{ asset('images/yasop_logo.png') }}">
-        <link rel="apple-touch-icon-precomposed" sizes="72x72" href="{{ asset('images/yasop_logo.png') }}">
-        <link rel="apple-touch-icon-precomposed" href="{{ asset('images/yasop_logo.png') }}">
-        <link rel="shortcut icon" href="{{ asset('images/yasop_logo.png') }}">
+        <link rel="apple-touch-icon-precomposed" sizes="144x144" href="{{ asset('images/yasop_logo.jpeg') }}">
+        <link rel="apple-touch-icon-precomposed" sizes="114x114" href="{{ asset('images/yasop_logo.jpeg') }}">
+        <link rel="apple-touch-icon-precomposed" sizes="72x72" href="{{ asset('images/yasop_logo.jpeg') }}">
+        <link rel="apple-touch-icon-precomposed" href="{{ asset('images/yasop_logo.jpeg') }}">
+        <link rel="shortcut icon" href="{{ asset('images/yasop_logo.jpeg') }}">
    
    
    <style>
@@ -88,7 +88,7 @@
                 <div class="container">
                 
                     <a href="#" class="brand">
-                        <img src="{{ asset('images/yasop_logo.png') }}"  alt="Logo" />
+                        <img src="{{ asset('images/yasop_logo.jpeg') }}"  alt="Logo" />
 						
                         <!-- This is website logo -->
                     </a>
@@ -156,7 +156,7 @@
                         </tr>
                         <tr>
                             <th><p>@lang('quickadmin.pengumuman.fields.file')</p></th>
-                            <td field-key='content'><a href="{{asset('uploads/pengumuman/'.$pengumuman->nama_file.'') }}" download="{{ asset('uploads/pengumuman/About.png') }}"> Unduh file</a></td>
+                            <td field-key='content'><a href="{{asset('uploads/pengumuman/'.$pengumuman->nama_file.'')}}" download="{{asset('uploads/pengumuman/'.$pengumuman->nama_file.'')}}"> Unduh file</a></td>
                             
                         </tr>
                     </table>
@@ -252,23 +252,7 @@
 
 
         <!-- Service section end -->
-        <!-- Portfolio section start -->
         
-               <!-- <div class="container-footer" style="background-color:#003152">
-                    <div class="span9 center contact-info">
-                        <p>Jl. Dr. Adrianus Sinaga No.1, Soposurung, Balige, Hinalang Bagasan, Balige, Kabupaten Toba Samosir, Sumatera Utara 22312</p>
-                        <p class="info-mail">contact@yasop.org</p>
-                        <p>Telp/Fax: (0632)-21496 (Senin - Sabtu, 08.00 - 17.00 WIB)
-                        <br>HP : 0853-5825-9916 (Senin - Sabtu, 08.00 - 17.00 WIB)</p>
-
-                            <h3>Asrama Yayasan Soposurung - SMAN 2 Balige</h3>
-                        </div>
-                    <div class="row-fluid centered">
-                        
-                    </div>
-                </div>
-            </div>
-        </div> -->
         
         <!-- Footer section start -->
         <!-- <div class="footer">

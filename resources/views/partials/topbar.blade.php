@@ -20,46 +20,46 @@
             <span class="icon-bar"></span>
         </a>
         <style>
+
         .acc-holder{
             float:right;
             margin-right:0px;
             height:50px;
-            width:200px;
+            width:20%;
             color:white;
             text-align:right;
             background-color: #4199CC;
             border-radius:10px;
         }
+
         .acc-holder > h5{
             margin-right:10px;
             text-align:right;
+            font-size:2vw;
         }
+
         .acc-holder > p{
             margin-right:10px;
             margin-bottom:auto;
         }
+
         .acc-holder img{
-            width:19%;
-            height:19%;
-            margin-right:20px;  
+            width:20%;
+            height:20%;
+            margin-right:20px;
             margin-top:3px;
-            
         }
+        
         </style>
         <div class="acc-holder">
-        <div class="row">
-        <div style="margin-left:20px;" class ="col-sm-4">
-       <h5><strong>{{ Auth::user()->name }}</strong><br>
-       {{ Auth::user()->role->title }}
-    </div>
-           
-       <img src="{{ asset('images/ava.png') }}"  alt="Logo" />
-    
-    </div>
-           </div>
-
-        
-
+            <div class="row">
+                <div style="margin-left:20px;" class ="col-sm-6">
+                    <h5><strong> {{ Auth::user()->name }} </strong><br>
+                                 {{ Auth::user()->role->title }}
+                </div>
+                <img src="{{ asset('images/ava.png') }}"  alt="Logo" />
+            </div>
+        </div>
     </nav>
 
 </header>

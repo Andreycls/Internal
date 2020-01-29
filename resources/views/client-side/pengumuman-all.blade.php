@@ -12,7 +12,7 @@
     <head>
         <meta charset=utf-8>
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <title>SPSB Asrama Yayasan Soposurung</title>
+        <title>SPSB Asrama Yayasan Tunas Bangsa Soposurung</title>
         <!-- Load Roboto font -->
         <link href="//netdna.bootstrapcdn.com/font-awesome/4.1.0/css/font-awesome.min.css" rel="stylesheet">
         <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.8.1/css/all.css" integrity="sha384-50oBUHEmvpQ+1lW4y57PTFmhCaXp0ML5d60M1M7uH2+nqUivzIebhndOJK28anvf" crossorigin="anonymous">
@@ -29,11 +29,11 @@
         <link rel="stylesheet" type="text/css" href="css/jquery.bxslider.css" />
         <link rel="stylesheet" type="text/css" href="css/animate.css" />
         <!-- Fav and touch icons -->
-        <link rel="apple-touch-icon-precomposed" sizes="144x144" href="images/yasop_logo.png">
-        <link rel="apple-touch-icon-precomposed" sizes="114x114" href="images/yasop_logo.png">
-        <link rel="apple-touch-icon-precomposed" sizes="72x72" href="images/yasop_logo.png">
-        <link rel="apple-touch-icon-precomposed" href="images/yasop_logo.png">
-        <link rel="shortcut icon" href="images/yasop_logo.png">
+        <link rel="apple-touch-icon-precomposed" sizes="144x144" href="images/yasop_logo.jpeg">
+        <link rel="apple-touch-icon-precomposed" sizes="114x114" href="images/yasop_logo.jpeg">
+        <link rel="apple-touch-icon-precomposed" sizes="72x72" href="images/yasop_logo.jpeg">
+        <link rel="apple-touch-icon-precomposed" href="images/yasop_logo.jpeg">
+        <link rel="shortcut icon" href="images/yasop_logo.jpeg">
    
    
    <style>
@@ -87,7 +87,7 @@
                 <div class="container">
                 
                     <a href="#" class="brand">
-                        <img src="images/yasop_logo.png"  alt="Logo" />
+                        <img src="images/yasop_logo.jpeg"  alt="Logo" />
 						
                         <!-- This is website logo -->
                     </a>
@@ -215,96 +215,7 @@ $('#myTable').DataTable( {
  </div>
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+<br><br><br><br><br><br><br>
         <!-- Service section end -->
         <!-- Portfolio section start -->
         
@@ -316,7 +227,7 @@ $('#myTable').DataTable( {
                         <p style="color:white">Telp/Fax: (0632)-21496 (Senin - Sabtu, 08.00 - 17.00 WIB)
                         <br style="color:white">HP : 0853-5825-9916 (Senin - Sabtu, 08.00 - 17.00 WIB)</p>
 
-                            <h3>Asrama Yayasan Soposurung - SMAN 2 Balige</h3>
+                            <h3>Asrama Yayasan Tunas Bangsa Soposurung - SMAN 2 Balige</h3>
                         </div>
                     <div class="row-fluid centered">
                         

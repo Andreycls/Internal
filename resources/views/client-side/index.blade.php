@@ -4,7 +4,7 @@
     <head>
         <meta charset=utf-8>
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <title>SPSB Asrama Yayasan Soposurung</title>
+        <title>SPSB Asrama Yayasan Tunas Bangsa Soposurung</title>
         <!-- Load Roboto font -->
         <link href="//netdna.bootstrapcdn.com/font-awesome/4.1.0/css/font-awesome.min.css" rel="stylesheet">
         <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.8.1/css/all.css" integrity="sha384-50oBUHEmvpQ+1lW4y57PTFmhCaXp0ML5d60M1M7uH2+nqUivzIebhndOJK28anvf" crossorigin="anonymous">
@@ -14,18 +14,16 @@
         <link rel="stylesheet" type="text/css" href="css/bootstrap-responsive.css" />
         <link rel="stylesheet" type="text/css" href="css/style.css" />
         <link rel="stylesheet" type="text/css" href="css/pluton.css" />
-        <!--[if IE 7]>
-            <link rel="stylesheet" type="text/css" href="css/pluton-ie7.css" />
-        <![endif]-->
+        
         <link rel="stylesheet" type="text/css" href="css/jquery.cslider.css" />
         <link rel="stylesheet" type="text/css" href="css/jquery.bxslider.css" />
         <link rel="stylesheet" type="text/css" href="css/animate.css" />
         <!-- Fav and touch icons -->
-        <link rel="apple-touch-icon-precomposed" sizes="144x144" href="images/yasop_logo.png">
-        <link rel="apple-touch-icon-precomposed" sizes="114x114" href="images/yasop_logo.png">
-        <link rel="apple-touch-icon-precomposed" sizes="72x72" href="images/yasop_logo.png">
-        <link rel="apple-touch-icon-precomposed" href="images/yasop_logo.png">
-        <link rel="shortcut icon" href="images/yasop_logo.png">
+        <link rel="apple-touch-icon-precomposed" sizes="144x144" href="images/yasop_logo.jpeg">
+        <link rel="apple-touch-icon-precomposed" sizes="114x114" href="images/yasop_logo.jpeg">
+        <link rel="apple-touch-icon-precomposed" sizes="72x72" href="images/yasop_logo.jpeg">
+        <link rel="apple-touch-icon-precomposed" href="images/yasop_logo.jpeg">
+        <link rel="shortcut icon" href="images/yasop_logo.jpeg">
     </head>
     
     <body>
@@ -34,7 +32,7 @@
                 <div class="container">
                 
                     <a href="#" class="brand">
-                        <img src="images/yasop_logo.png"  alt="Logo" />
+                        <img src="images/yasop_logo.jpeg"  alt="Logo" />
 						
                         <!-- This is website logo -->
                     </a>
@@ -77,7 +75,8 @@
                 <div class="container">
                     <!-- Start first slide -->
                     <div class="da-slide">
-                        <h2 class="fittext2" style="color:white">{{$last->title}}</h2>
+                    
+                        <h2 class="fittext2" style="color:white">{{$last->title or 'Pengumuman'}}</h2>
                         <a href="{{ url('/pengumuman') }}" class="da-link button">Baca selengkapnya</a>
                         <div class="da-img">
                             <img src="images/pengumuman_h.png" alt="image01" width="320">
@@ -98,7 +97,7 @@
                     <div class="da-slide">
                         <h2 style="color:white">Panduan</h2>
                         <p>Panduan dan pertanyaan seputar pendaftaran</p>
-                        <a href="#" class="da-link button">Baca selengkapnya</a>
+                        <a href="#about" class="da-link button">Baca selengkapnya</a>
                         <div class="da-img">
                             <img src="images/rules-icon.png" width="320" alt="image03">
                         </div>
@@ -639,90 +638,13 @@
             </div>
         </div>
         
-        <!-- Price section start -->
-        <!--
-        <div id="price" class="section secondary-section">
-            <div class="container">
-                <div class="title">
-                    <h1>Price</h1>
-                    <p>Duis mollis placerat quam, eget laoreet tellus tempor eu. Quisque dapibus in purus in dignissim.</p>
-                </div>
-                <div class="price-table row-fluid">
-                    <div class="span4 price-column">
-                        <h3>Basic</h3>
-                        <ul class="list">
-                            <li class="price">$19,99</li>
-                            <li><strong>Free</strong> Setup</li>
-                            <li><strong>24/7</strong> Support</li>
-                            <li><strong>5 GB</strong> File Storage</li>
-                        </ul>
-                        <a href="#" class="button button-ps">BUY</a>
-                    </div>
-                    <div class="span4 price-column">
-                        <h3>Pro</h3>
-                        <ul class="list">
-                            <li class="price">$39,99</li>
-                            <li><strong>Free</strong> Setup</li>
-                            <li><strong>24/7</strong> Support</li>
-                            <li><strong>25 GB</strong> File Storage</li>
-                        </ul>
-                        <a href="#" class="button button-ps">BUY</a>
-                    </div>
-                    <div class="span4 price-column">
-                        <h3>Premium</h3>
-                        <ul class="list">
-                            <li class="price">$79,99</li>
-                            <li><strong>Free</strong> Setup</li>
-                            <li><strong>24/7</strong> Support</li>
-                            <li><strong>50 GB</strong> File Storage</li>
-                        </ul>
-                        <a href="#" class="button button-ps">BUY</a>
-                    </div>
-                </div>
-                <div class="centered">
-                    <p class="price-text">We Offer Custom Plans. Contact Us For More Info.</p>
-                    <a href="#contact" class="button">Contact Us</a>
-                </div>
-            </div>
-        </div>
-       
-
-        -->
-        <!-- Newsletter section start 
-        <div class="section third-section">
-            <div class="container newsletter">
-                <div class="sub-section">
-                    <div class="title clearfix">
-                        <div class="pull-left">
-                            <h3>Newsletter</h3>
-                        </div>
-                    </div>
-                </div>
-                <div id="success-subscribe" class="alert alert-success invisible">
-                    <strong>Well done!</strong>You successfully subscribet to our newsletter.</div>
-                <div class="row-fluid">
-                    <div class="span5">
-                        <p>Lorem ipsum dolor sit amet, consectetuer adipiscing elit, sed diam nonummy nibh euismod tincidunt ut laoreet dolore magna aliquam erat volutpat.</p>
-                    </div>
-                    <div class="span7">
-                        <form class="inline-form">
-                            <input type="email" name="email" id="nlmail" class="span8" placeholder="Enter your email" required />
-                            <button id="subscribe" class="button button-sp">Subscribe</button>
-                        </form>
-                        <div id="err-subscribe" class="error centered">Please provide valid email address.</div>
-                    </div>
-                </div>
-            </div>
-        </div>
-   -->
-
         <!-- Contact section start -->
         <div id="contact" class="contact">
             <div class="section secondary-section">
                 <div class="container">
                     <div class="title">
-                        <h1>Hubungi kami</h1>
-                        <p>Silahkan hubungi kami jika ada pernyataan yang ingin disampaikan.</p>
+                        <h1 style="color:white">Hubungi kami</h1>
+                        <p style="color:white">Silahkan hubungi kami jika ada pernyataan yang ingin disampaikan.</p>
                     </div>
                 </div>
                 <div class="map-wrapper">
@@ -786,31 +708,7 @@
                                 <img src="images/briapi.png" alt="client logo 2">
                             </a>
                         </li>
-                        <li>
-                            <a href="">
-                                <img src="images/clients/ClientLogo03.png" alt="client logo 3">
-                            </a>
-                        </li>
-                        <li>
-                            <a href="">
-                                <img src="images/clients/ClientLogo04.png" alt="client logo 4">
-                            </a>
-                        </li>
-                        <li>
-                            <a href="">
-                                <img src="images/clients/ClientLogo05.png" alt="client logo 5">
-                            </a>
-                        </li>
-                        <li>
-                            <a href="">
-                                <img src="images/clients/ClientLogo02.png" alt="client logo 6">
-                            </a>
-                        </li>
-                        <li>
-                            <a href="">
-                                <img src="images/clients/ClientLogo04.png" alt="client logo 7">
-                            </a>
-                        </li>
+                        
                     </ul>
                 </div>
             </div>
@@ -823,7 +721,7 @@
                         <p style="color:white">HP : 0853-5825-9916 (Senin - Sabtu, 08.00 - 17.00 WIB)</p>
 
                         <div class="title">
-                            <h3>Asrama Yayasan Soposurung - SMAN 2 Balige</h3>
+                            <h3>Asrama Yayasan Tunas Bangsa Soposurung - SMAN 2 Balige</h3>
                         </div>
                     </div>
                     <div class="row-fluid centered">
@@ -897,15 +795,6 @@
 
 
 
-
-
-
-        <!-- 6b2222 Contact section edn -->
-        
-        <!-- Footer section start -->
-        <!-- <div class="footer">
-             </div>
-        Footer section end -->
         <!-- ScrollUp button start -->
         <div class="scrollup">
             <a href="#">

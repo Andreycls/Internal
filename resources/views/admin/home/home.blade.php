@@ -2,15 +2,17 @@
 
 @section('content')
 <link href="https://unpkg.com/ionicons@4.5.5/dist/css/ionicons.min.css" rel="stylesheet">
+          <style>
+                .small-box{
+                    border-radius:10px;
+                }
+          </style>
+
 <div class="row">
         <div class="col-md-12">
         <div class="row">
           
-
-
-
           <div class="col-lg-3 col-xs-6">
-              <!-- small box -->
 
     <div class="small-box bg-red">
       <div class="inner">
@@ -24,11 +26,6 @@
       <a href="{{ route('admin.pendaftaran.index') }}" class="small-box-footer">Selengkapnya <i class="fa fa-arrow-circle-right"></i></a>
     </div>
   </div>
-
-
-
-
-
 
           <div class="col-lg-3 col-xs-6">
               <!-- small box -->
@@ -77,42 +74,58 @@
   </div>
 
 </div>  
+
+
+
         <div class="panel panel-default">
-                <div class="panel-heading">@lang('quickadmin.qa_dashboard')</div>
-                <style>
-                .small-box{
-                    border-radius:10px;
-                }
+                <div class="panel-heading">Statistik pendaftar</div>
+                
+        <table style="width:100%">
+            <tr>
+              <th>
+              @donutchart('kota', 'chart-div')
+                  <div id="charts-div" ></div>
+              
+              </th>
+              <th>
+                  @donutchart('allPeserta', 'charts-div')
+                  <div id="chart-div" ></div>
+                
+              </th> 
+              
+            </tr>
+            
+        </table>
+        
+      
+            </div>
 
-
-                </style>
-          
-          
-          <div class="panel-body">
-          
-          <div id="chart-div" ></div>
-@donutchart('kota', 'chart-div')
-<div id="charts-div" ></div>
-@donutchart('IMDB', 'charts-div')
-<div id="chart-div" ></div>
-@donutchart('kota', 'chart-div')
-
-
-Response After create VA :
-{{!!$responseCreateVA!!}}
-
-<br><br>
-Response Get Report :
-{!!$getStatusVA!!}
-<br><br>
-Response :
-{!!$responseName!!}
-
-<br><br>
-EMAIL : 
-
-                </div>
+            <div class="panel panel-default">
+                <div class="panel-heading">Statistik pendaftar</div>
+                
+        <table style="width:100%">
+            <tr>
+              <th>
+              
+              @donutchart('kota', 'chart-div')
+                  <div id="charts-div" ></div>
+              
+              </th>
+              <th>
+              
+                  @donutchart('allPeserta', 'charts-div')
+                  <div id="chart-div" ></div>
+                  @donutchart('kota', 'chart-div')
+              </th> 
+              
+            </tr>
+            
+        </table>
+        
+      
             </div>
         </div>
     </div>
+
+    
 @endsection

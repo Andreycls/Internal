@@ -351,10 +351,8 @@ class MailingHelper
                                       <p style='font-family: sans-serif; font-size: 14px; font-weight: normal; margin: 0; Margin-bottom: 15px;'>Nomor Pendaftaran:  ".$nisn."</p>
                                   
                                       <br><br>
-                                      <h2> Metode Pembayaran </h2><br>
-                                      <p style='font-family: sans-serif; font-size: 14px; font-weight: normal; margin: 0; Margin-bottom: 15px;'>Silahkan melakukan pembayaran melalui BRI Virtual Account :</p>
-                                      <p style='font-family: sans-serif; font-size: 14px; font-weight: normal; margin: 0; Margin-bottom: 15px;'>BRI Virtual Account : 00000".$nisn."000 a.n Yayasan Soposurung</p>
-                                      <p style='font-family: sans-serif; font-size: 14px; font-weight: normal; margin: 0; Margin-bottom: 15px;'>Biaya administrasi  : Rp. 200.000 </p>
+                                      Silahkan mengunduh kartu ujian di link ini <a href='http://localhost:8000/admin/generate/pdf/kartu_peserta/".$nisn."'>Kartu peserta</a>
+                                      
                                       <br>
                                       <p style='font-family: sans-serif; font-size: 14px; font-weight: normal; margin: 0; Margin-bottom: 15px;'>Catatan :</p>
                                       <p>Pembayaran paling lambat 24 jam setelah pendaftaran</p>

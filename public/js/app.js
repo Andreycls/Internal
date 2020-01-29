@@ -400,7 +400,7 @@ function initializeMap() {
     });
 
     var infowindow = new google.maps.InfoWindow({
-        content: "Asrama Yayasan Soposurung Balige"
+        content: "Asrama Yayasan Tunas Bangsa Soposurung"
     });
 
     google.maps.event.addListener(marker, 'click', function () {

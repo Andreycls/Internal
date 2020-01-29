@@ -33,7 +33,7 @@
                         <th>@lang('quickadmin.kota.fields.index')</th>
                         <th>@lang('quickadmin.kota.fields.city')</th>
                         <th>@lang('quickadmin.jadwal.fields.tesAkademik')</th>
-                        <th>@lang('quickadmin.kota.fields.banyakRuangan')</th>
+                        
                                                 
 
                     </tr>
@@ -49,7 +49,7 @@
                                 <td field-key='id'>{{ $kota->id }}</td>
                                 <td field-key='title'>{{ $kota->nama_kota }}</td>
                                 <td field-key='title'>{{ $kota->tes_akademik }}</td>
-                                <td field-key='title'>{{ $kota->ruangan_utama }}</td>
+                                
                                                                 <td>
                                     @can('pengumuman_view')
                                     <a href="{{ route('admin.kota.show',[$kota->id]) }}" class="btn btn-xs btn-primary">@lang('quickadmin.qa_view')</a>

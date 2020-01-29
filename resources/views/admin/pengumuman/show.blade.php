@@ -35,7 +35,7 @@
                         </tr>
                         <tr>
                         <th><p>@lang('quickadmin.pengumuman.fields.file')</p></th>
-                            <td field-key='content'><a href="{{asset('uploads/pengumuman/'.$pengumuman->nama_file.'') }}" download="{{ asset('uploads/pengumuman/About.png') }}"> Unduh file</a></td>
+                            <td field-key='content'><a href="{{asset('uploads/pengumuman/'.$pengumuman->nama_file.'') }}" download="{{asset('uploads/pengumuman/'.$pengumuman->nama_file.'') }}"> Unduh file</a></td>
                         </a></td>
                         </tr>
 
@@ -63,7 +63,7 @@
     <thead>
         <tr>
             <th>@lang('quickadmin.expense-category.fields.name')</th>
-                        <th>@lang('quickadmin.expense-category.fields.created-by')</th>
+            <th>@lang('quickadmin.expense-category.fields.created-by')</th>
                                                 <th>&nbsp;</th>
 
         </tr>
@@ -74,7 +74,7 @@
             @foreach ($pengumumans as $pengumumans)
                 <tr data-entry-id="{{ $pengumumans->id }}">
                     <td field-key='name'>{{ $pengumuman->title }}</td>
-                                <td field-key='created_by'>{{ $pengumumans->created_by->name or '' }}</td>
+                    <td field-key='created_by'>{{ $pengumuman->author or '' }}</td>
                                                                 <td>
                                     @can('view')
                                     <a href="{{ route('expense_categories.show',[$expense_category->id]) }}" class="btn btn-xs btn-primary">@lang('quickadmin.qa_view')</a>

@@ -32,7 +32,7 @@
                     {!! Form::text('tes_akademik', old('tes_akademik'), ['class' => 'date form-control', 'placeholder' => '', 'required' => '']) !!}
                     
                     {!! Form::label('tesAkademik', trans('quickadmin.jadwal.fields.banyakRuanganUtama'), ['class' => 'control-label']) !!}
-                    {!! Form::text('ruangan_akademik', old('tes_akademik'), ['class' => 'form-control', 'placeholder' => '', 'required' => '']) !!}
+                    {!! Form::text('ruangan_utama', old('ruangan_utama'), ['class' => 'form-control', 'placeholder' => '', 'required' => '']) !!}
                     
                     <p class="help-block"></p>
                     @if($errors->has('title'))
@@ -43,22 +43,6 @@
                 </div>
             </div>
             
-            {{--
-            <!--
-            <div class="row">
-                <div class="col-xs-12 form-group">
-                    {!! Form::label('ruangan_id', trans('quickadmin.users.fields.kota').'*', ['class' => 'control-label']) !!}
-                    {!! Form::select('ruangan_id', $ruangans, old('ruangan_id'), ['class' => 'form-control select2', 'required' => '']) !!}
-                    <p class="help-block"></p>
-                    @if($errors->has('ruangan_id'))
-                        <p class="help-block">
-                            {{ $errors->first('ruangan_id') }}
-                        </p>
-                    @endif
-                </div>
-            </div>
-            -->
-            --}}
         </div>
     </div>
     

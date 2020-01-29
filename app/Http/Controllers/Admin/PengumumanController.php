@@ -8,7 +8,7 @@ use App\Http\Controllers\Controller;
 use App\Http\Requests\Admin\StorePengumumanRequest;
 use App\Http\Requests\Admin\UpdatePengumumanRequest;
 use Illuminate\Support\Facades\Input;
-
+use DB;
 use Mpdf\Mpdf;
 class PengumumanController extends Controller
 {
@@ -19,13 +19,7 @@ class PengumumanController extends Controller
      */
     public function index()
     {
-        if (! Gate::allows('pengumuman_access')) {
-            return abort(401);
-        }
-
-
-                $pengumuman = Pengumuman::all();
-
+         $pengumuman = Pengumuman::all();
         return view('admin.pengumuman.index', compact('pengumuman'));
     }
 
@@ -41,11 +35,8 @@ class PengumumanController extends Controller
      */
     public function create()
     {
-        if (! Gate::allows('role_create')) {
-            return abort(401);
-        }
+    
         $pengumuman = \App\Pengumuman::get()->pluck('title', 'id')->prepend(trans('quickadmin.qa_please_select'), '');
-
         return view('admin.pengumuman.create');
     }
 
@@ -58,26 +49,23 @@ class PengumumanController extends Controller
     public function store(StorePengumumanRequest $request)
     {
         $timestamp = gmdate("Ymd-TH:i:s.000-Z");
-        if(Input::hasFile('file')){
-            $file = Input::file('file');
-            $file->move('uploads/pengumuman', $timestamp.$file->getClientOriginalName());
-            $request->merge(['nama_file' =>  $timestamp.$file->getClientOriginalName()]);
-        }
-        
+        try{
+            DB::beginTransaction();
+            if(Input::hasFile('file')){
+                $file = Input::file('file');
+                $file->move('uploads/pengumuman', $timestamp.$file->getClientOriginalName());
+                $request->merge(['nama_file' =>  $timestamp.$file->getClientOriginalName()]);
+            }
             $pengumuman = Pengumuman::create($request->all());
-            $request->merge(['nama_file' =>  $timestamp.$file->getClientOriginalName()]);
-        // }
-        // catch(Exception $e)
-        // {
-        //   return back()->withErrors(['Koneksi lambat. Mohon ulangi kembali pendaftaran']);
-        // }
-        return redirect()->route('admin.pengumuman.index');
-
-
+            //$request->merge(['nama_file' =>  $timestamp.$file->getClientOriginalName()]);
+            DB::commit();
+            return redirect()->route('admin.pengumuman.index');
+        }catch(Exception $e){
+            DB::rollback();
+            return back()->withErrors(['Koneksi lambat. Mohon ulangi kembali pendaftaran']);
+        }
+    
     }
-
-
-
     /**
      * Show the form for editing Role.
      *
@@ -86,11 +74,7 @@ class PengumumanController extends Controller
      */
     public function edit($id)
     {
-        if (! Gate::allows('pengumuman_edit')) {
-            return abort(401);
-        }
         $pengumuman = Pengumuman::findOrFail($id);
-
         return view('admin.pengumuman.edit', compact('pengumuman'));
     }
 
@@ -103,12 +87,23 @@ class PengumumanController extends Controller
      */
     public function update(UpdatePengumumanRequest $request, $id)
     {
-        if (! Gate::allows('pengumuman_edit')) {
-            return abort(401);
-        }
         $pengumuman = Pengumuman::findOrFail($id);
-        $pengumuman->update($request->all());
-        return redirect()->route('admin.pengumuman.index');
+        $timestamp = gmdate("Ymd-TH:i:s.000-Z");
+        try{
+            DB::beginTransaction();
+            if(Input::hasFile('file')){
+                $file = Input::file('file');
+                $file->move('uploads/pengumuman', $timestamp.$file->getClientOriginalName());
+                $request->merge(['nama_file' =>  $timestamp.$file->getClientOriginalName()]);
+            }
+            $pengumuman->update($request->all());
+            DB::commit();
+            return redirect()->route('admin.pengumuman.index');
+        }catch(Exception $e){
+            DB::rollback();
+            return back()->withErrors(['Koneksi lambat. Mohon ulangi kembali pendaftaran']);
+        }
+
     }
 
 
@@ -120,13 +115,8 @@ class PengumumanController extends Controller
      */
     public function show($id)
     {
-        if (! Gate::allows('pengumuman_view')) {
-            return abort(401);
-        }
         $pengumumans = \App\Pengumuman::where('id', $id)->get();
-
         $pengumuman = Pengumuman::findOrFail($id);
-
         return view('admin.pengumuman.show', compact('id', 'pengumuman','pengumumans'));
     }
 
@@ -139,32 +129,11 @@ class PengumumanController extends Controller
      */
     public function destroy($id)
     {
-        if (! Gate::allows('pengumuman_delete')) {
-            return abort(401);
-        }
         $pengumuman = Pengumuman::findOrFail($id);
         $pengumuman->delete();
-
         return redirect()->route('admin.pengumuman.index');
     }
 
-    /**
-     * Delete all selected Role at once.
-     *
-     * @param Request $request
-     */
-    public function massDestroy(Request $request)
-    {
-        if (! Gate::allows('pengumuman_delete')) {
-            return abort(401);
-        }
-        if ($request->input('id')) {
-            $entries = Pengumuman::whereIn('id', $request->input('id'))->get();
-
-            foreach ($entries as $entry) {
-                $entry->delete();
-            }
-        }
-    }
+    
 
 }

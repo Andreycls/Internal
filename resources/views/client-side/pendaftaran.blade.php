@@ -10,28 +10,26 @@
     <head>
         <meta charset=utf-8>
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <title>SPSB Asrama Yayasan Soposurung</title>
+        <title>SPSB Asrama Yayasan Tunas Bangsa Soposurung</title>
         <!-- Load Roboto font -->
         <link href="//netdna.bootstrapcdn.com/font-awesome/4.1.0/css/font-awesome.min.css" rel="stylesheet">
         <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.8.1/css/all.css" integrity="sha384-50oBUHEmvpQ+1lW4y57PTFmhCaXp0ML5d60M1M7uH2+nqUivzIebhndOJK28anvf" crossorigin="anonymous">
         <link href='http://fonts.googleapis.com/css?family=Roboto:400,300,700&amp;subset=latin,latin-ext' rel='stylesheet' type='text/css'>
-        <!-- Load css styles -->
+       
         <link rel="stylesheet" type="text/css" href="{{ asset('css/bootstrap.css') }}" />
         <link rel="stylesheet" type="text/css" href="{{ asset('css/bootstrap-responsive.css') }}" />
         <link rel="stylesheet" type="text/css" href="{{ asset('css/style.css') }}" />
         <link rel="stylesheet" type="text/css" href="{{ asset('css/pluton.css') }}" />
-        <!--[if IE 7]>
-            <link rel="stylesheet" type="text/css" href="css/pluton-ie7.css" />
-        <![endif]-->
+       
         <link rel="stylesheet" type="text/css" href="{{ asset('css/jquery.cslider.css') }}" />
         <link rel="stylesheet" type="text/css" href="{{ asset('css/jquery.bxslider.css') }}" />
         <link rel="stylesheet" type="text/css" href="{{ asset('css/animate.css') }}" />
         <!-- Fav and touch icons -->
-        <link rel="apple-touch-icon-precomposed" sizes="144x144" href="{{ asset('images/yasop_logo.png') }}">
-        <link rel="apple-touch-icon-precomposed" sizes="114x114" href="{{ asset('images/yasop_logo.png') }}">
-        <link rel="apple-touch-icon-precomposed" sizes="72x72" href="{{ asset('images/yasop_logo.png') }}">
-        <link rel="apple-touch-icon-precomposed" href="{{ asset('images/yasop_logo.png') }}">
-        <link rel="shortcut icon" href="{{ asset('images/yasop_logo.png') }}">
+        <link rel="apple-touch-icon-precomposed" sizes="144x144" href="{{ asset('images/yasop_logo.jpeg') }}">
+        <link rel="apple-touch-icon-precomposed" sizes="114x114" href="{{ asset('images/yasop_logo.jpeg') }}">
+        <link rel="apple-touch-icon-precomposed" sizes="72x72" href="{{ asset('images/yasop_logo.jpeg') }}">
+        <link rel="apple-touch-icon-precomposed" href="{{ asset('images/yasop_logo.jpeg') }}">
+        <link rel="shortcut icon" href="{{ asset('images/yasop_logo.jpeg') }}">
         
         <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.js"></script>
    
@@ -55,7 +53,7 @@
                 <div class="container">
                 
                     <a href="#" class="brand">
-                        <img src="{{ asset('images/yasop_logo.png') }}"  alt="Logo" />
+                        <img src="{{ asset('images/yasop_logo.jpeg') }}"  alt="Logo" />
 						
                         <!-- This is website logo -->
                     </a>
@@ -125,9 +123,11 @@
     {!! Form::open(['method' => 'POST','files' =>true,'enctype'=>'multipart/form-data', 'route' => ['pendaftaran.store']]) !!}
    @php
     $tanggalSystem = new DateTime(date("Y/m/d")); 
-    $tanggalPembukaan = new DateTime($tanggal->periodeMulai); 
-    $tanggalPenutupan = new DateTime($tanggal->periodeAkhir);
-  
+    $tanggalPembukaan = new DateTime($tanggal["periodeMulai"]); 
+    $tanggalPenutupan = new DateTime($tanggal["periodeAkhir"]);
+    if(empty($listKota) or !isset($listKota)){
+      $listKota=["Tidak ada"];
+    }
 if(($tanggalSystem > $tanggalPembukaan)&&($tanggalSystem < $tanggalPenutupan)){
     echo "<fieldset >";}
 else
@@ -150,9 +150,9 @@ else
     <th style="width:5%"></th>
     <th align="left">
     
-    <select name="lokasi" class="foo">
-                                        <option value="">-- Pilih Lokasi --</option>
-                                        @foreach ($kota as $kotas => $val)
+    <select name="lokasi" class="foo" required>
+                                        <option value="" disabled selected hidden>Pilih lokasi ujian</option>
+                                        @foreach ($listKota as $kotas => $val)
                                         <option value="{{ strtoupper($val) }}"> {{ $val }}</option>   
                                         @endforeach
                                     </select>
@@ -164,7 +164,7 @@ else
     <th align="right">{!! Form::label('nama_kota', trans('quickadmin.pendaftaran.fields.nama').' ', ['class' => 'control-label']) !!} </th>
     <th style="width:5%"></th>
     <th align="left"> 
-    <input type="text" name="nama_lengkap" id="nama_lengkap" class= 'foo' onchange="upperMe()" />
+    <input type="text" name="nama_lengkap" id="nama_lengkap" placeholder = "Nama lengkap sesuai ijazah" class= 'foo' onchange="upperMe()" required />
     
     
     </th> 
@@ -179,7 +179,7 @@ else
   <tr>
     <th align="right"> {!! Form::label('nisn', trans('quickadmin.pendaftaran.fields.email'), ['class' => 'control-label']) !!}</th>
     <th style="width:5%"></th>
-    <th align="left"> <input type="text" name="email" id="email" class= 'foo' onchange="upperMe()" />
+    <th align="left"> <input type="text" name="email" id="email" placeholder = "Alamat email yang aktif" class= 'foo' onchange="upperMe()" required />
     </th> 
   </tr>
 
@@ -204,7 +204,7 @@ else
     <th align="left">
     
     <select name="agama" class="foo">
-                                        
+                                        <option value="" disabled selected hidden></option>
                                         @foreach ($agama as $agamas => $val)
                                         <option value="{{ $val }}"> {{ $val }}</option>   
                                         @endforeach
@@ -212,11 +212,11 @@ else
     
     
     </th>
-
+    
   <tr>
     <th align="right"> {!! Form::label('nisn', trans('quickadmin.pendaftaran.fields.ttl'), ['class' => 'control-label']) !!}</th>
     <th style="width:5%"></th>
-    <th align="left"> <input type="text" name="tempat_lahir" id="tempat_lahir" class= 'ttl' onchange="upperMe()" />  /  {!! Form::date('tanggal_lahir', old('tanggal_lahir'), ['class' => 'date ttl', 'placeholder' => '', 'required' => '']) !!}</th> 
+    <th align="left"> <input type="text" name="tempat_lahir" id="tempat_lahir" class= 'ttl' onchange="upperMe()" required/>  /   {!! Form::date('tanggal_lahir', old('tanggal_lahir'), ['class' => 'date ttl', 'placeholder' => '', 'required' => '','max'=>date("Y-m-d")]) !!}</th> 
   </tr>
 
  <tr>
@@ -224,14 +224,12 @@ else
     <th style="width:5%"></th>
     <th align="left">
     
-    <select name="provinsi" class="foo">
-                                        <option>-- Pilih Provinsi --</option>
+    <select name="provinsi" class="foo" required>
+                                        <option value="" disabled selected hidden>Provinsi asal lahir</option>
                                         @foreach ($propinsi as $propinsis => $value)
                                         <option value="{{ $propinsis }}"> {{ $value }}</option>   
                                         @endforeach
                                     </select>
-    
-    
     </th>
   </tr>
 
@@ -240,7 +238,7 @@ else
     <th style="width:5%"></th>
     <th align="left">
     <select name="kabkota" class="foo">
-                                     <option>-- Pilih Kabupaten / Kota --</option>
+                            <option value="" disabled selected hidden>Kota asal lahir</option>
 
                                  </select>
     </th>
@@ -249,7 +247,7 @@ else
     <tr>
     <th align="right"> {!! Form::label('nisn', trans('quickadmin.pendaftaran.fields.smp'), ['class' => 'control-label']) !!}</th>
     <th style="width:5%"></th>
-    <th align="left"><input type="text" name="smp" id="smp" class= 'foo' onchange="upperMe()" /></th> 
+    <th align="left"><input type="text" name="smp" id="smp" class= 'foo' onchange="upperMe()" required /></th> 
   </tr>
 
   <tr>
@@ -261,13 +259,13 @@ else
   <tr>
     <th align="right"> {!! Form::label('nisn', trans('quickadmin.pendaftaran.fields.namaAyah'), ['class' => 'control-label']) !!}</th>
     <th style="width:5%"></th>
-    <th align="left"><input type="text" name="nama_ayah" id="nama_ayah" class= 'foo' onchange="upperMe()" /></th> 
+    <th align="left"><input type="text" name="nama_ayah" id="nama_ayah" class= 'foo' onchange="upperMe()" required /></th> 
   </tr>
 
   <tr>
     <th align="right"> {!! Form::label('nisn', trans('quickadmin.pendaftaran.fields.namaIbu'), ['class' => 'control-label']) !!}</th>
     <th style="width:5%"></th>
-    <th align="left"><input type="text" name="nama_ibu" id="nama_ibu" class= 'foo' onchange="upperMe()" /></th> 
+    <th align="left"><input type="text" name="nama_ibu" id="nama_ibu" class= 'foo' onchange="upperMe()" required /></th> 
   </tr>
 
   <tr>
@@ -279,24 +277,24 @@ else
   <tr>
     <th align="right"> {!! Form::label('nisn', trans('quickadmin.pendaftaran.fields.pekerjaanAyah'), ['class' => 'control-label']) !!}</th>
     <th style="width:5%"></th>
-    <th align="left"><input type="text" name="pekerjaan_ayah" id="pekerjaan_ayah" class= 'foo' onchange="upperMe()" /></th> 
+    <th align="left"><input type="text" name="pekerjaan_ayah" id="pekerjaan_ayah" class= 'foo' onchange="upperMe()" required /></th> 
   </tr>
 
   <tr>
     <th align="right"> {!! Form::label('nisn', trans('quickadmin.pendaftaran.fields.pekerjaanIbu'), ['class' => 'control-label']) !!}</th>
     <th style="width:5%"></th>
-    <th align="left" ><input type="text" name="pekerjaan_ibu" id="pekerjaan_ibu" class= 'foo' onchange="upperMe()" /></th> 
+    <th align="left" ><input type="text" name="pekerjaan_ibu" id="pekerjaan_ibu" class= 'foo' onchange="upperMe()" required/></th> 
   </tr>
   <tr>
     <th align="right"> {!! Form::label('nisn', trans('quickadmin.pendaftaran.fields.alamatOT'), ['class' => 'control-label']) !!}</th>
     <th style="width:5%"></th>
-    <th align="left" ><input type="text" name="alamat_orangtua" id="alamat_orangtua" class= 'foo' onchange="upperMe()" /></th> 
+    <th align="left" ><input type="text" name="alamat_orangtua" id="alamat_orangtua" class= 'foo' onchange="upperMe()" required /></th> 
   </tr>
 
   <tr>
     <th align="right"> {!! Form::label('nisn', trans('quickadmin.pendaftaran.fields.pilihGambar'), ['class' => 'control-label']) !!}</th>
     <th style="width:5%"></th>
-    <th align="left" ><input type="file" name="file" id="file" required><input type="hidden" value="{{ csrf_token() }}" name="_token"></th> 
+    <th align="left" ><input type="file" name="file" id="file" accept=".jpg,.jpeg,.png" required ><input type="hidden" value="{{ csrf_token() }}" name="_token"></th> 
     <script > 
     
 function upperMe() { 
@@ -346,7 +344,6 @@ function upperMe() {
 
 
 @endif
-  <input type="hidden" name="foto" id="foto" value="">
   <script type="text/javascript">
 
 $(document).ready(function(){
@@ -355,8 +352,6 @@ $(document).ready(function(){
 
         var fileName = e.target.files[0].name;
         document.getElementById('foto').value=fileName;
-        // alert('The file "' + fileName +  '" has been selected.');
-        // return fileName;
         $('#foto').val(fileName);
     });
 
@@ -440,73 +435,6 @@ $("#from, #to").datepicker({
 });
 
 </script>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-        
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-        
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 
 
@@ -604,23 +532,7 @@ $("#from, #to").datepicker({
 
 
         <!-- Service section end -->
-        <!-- Portfolio section start -->
         
-               <!-- <div class="container-footer" style="background-color:#003152">
-                    <div class="span9 center contact-info">
-                        <p>Jl. Dr. Adrianus Sinaga No.1, Soposurung, Balige, Hinalang Bagasan, Balige, Kabupaten Toba Samosir, Sumatera Utara 22312</p>
-                        <p class="info-mail">contact@yasop.org</p>
-                        <p>Telp/Fax: (0632)-21496 (Senin - Sabtu, 08.00 - 17.00 WIB)
-                        <br>HP : 0853-5825-9916 (Senin - Sabtu, 08.00 - 17.00 WIB)</p>
-
-                            <h3>Asrama Yayasan Soposurung - SMAN 2 Balige</h3>
-                        </div>
-                    <div class="row-fluid centered">
-                        
-                    </div>
-                </div>
-            </div>
-        </div> -->
         
         <!-- Footer section start -->
         <!-- <div class="footer">
